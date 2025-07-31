@@ -44,32 +44,183 @@
     </div>
     
     <footer class="fade-in">
-      © 2023 Cosmic Coffee Stains | An Archive of Raw Clarity
+      © 2025 Cosmic Coffee Stains | An Archive of Raw Clarity
     </footer>
   </div>
 
   <script src="js/cosmic.js"></script>
-<!-- Cosmic Support Element -->
-<div class="support-element">
-  <a href="mailto:your-email@example.com?subject=Hello%20from%20Cosmic%20Coffee%20Stains&body=Hi%20Parth,%0A%0AI%20discovered%20your%20work%20at%20Cosmic%20Coffee%20Stains%20and%20wanted%20to%20reach%20out..." 
-     class="support-button contact" 
-     title="Write to me">
-    <span class="icon">✉️</span>
-    Write to me
+<!-- Cosmic Support Element - Complete Fix -->
+<style>
+.cosmic-support {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(192, 165, 123, 0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  min-width: 160px;
+}
+
+.cosmic-support:hover {
+  background: rgba(26, 26, 26, 0.9);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  border-color: rgba(192, 165, 123, 0.7);
+}
+
+.cosmic-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(192, 165, 123, 0.1), rgba(192, 165, 123, 0.05));
+  border: 1px solid rgba(192, 165, 123, 0.3);
+  border-radius: 16px;
+  color: #f2f2f2;
+  text-decoration: none;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cosmic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(192, 165, 123, 0.15), transparent);
+  transition: left 0.6s ease;
+}
+
+.cosmic-btn:hover::before {
+  left: 100%;
+}
+
+.cosmic-btn:hover {
+  background: linear-gradient(135deg, rgba(192, 165, 123, 0.25), rgba(192, 165, 123, 0.15));
+  border-color: #c0a57b;
+  color: #c0a57b;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(192, 165, 123, 0.2);
+}
+
+.cosmic-btn .cosmic-icon {
+  margin-right: 10px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(192, 165, 123, 0.3));
+}
+
+.cosmic-btn:hover .cosmic-icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px rgba(192, 165, 123, 0.6));
+}
+
+/* Stellar pulse animation for contact */
+.stellar-pulse:hover .cosmic-icon {
+  animation: stellarPulse 0.8s ease;
+}
+
+@keyframes stellarPulse {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(-5deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  75% { transform: scale(1.25) rotate(-3deg); }
+}
+
+/* Cosmic glow animation for support */
+.cosmic-glow:hover .cosmic-icon {
+  animation: cosmicGlow 0.9s ease;
+}
+
+@keyframes cosmicGlow {
+  0%, 100% { 
+    transform: scale(1); 
+    filter: drop-shadow(0 0 8px rgba(192, 165, 123, 0.6));
+  }
+  50% { 
+    transform: scale(1.2); 
+    filter: drop-shadow(0 0 15px rgba(192, 165, 123, 0.9));
+  }
+}
+
+/* Outer cosmic aura */
+.cosmic-support::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(192, 165, 123, 0.15), 
+    transparent, 
+    rgba(192, 165, 123, 0.1), 
+    transparent
+  );
+  border-radius: 23px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cosmic-support:hover::after {
+  opacity: 1;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .cosmic-support {
+    bottom: 20px;
+    right: 20px;
+    padding: 14px 8px;
+    min-width: 140px;
+  }
+  
+  .cosmic-btn {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+  
+  .cosmic-btn .cosmic-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+  }
+}
+</style>
+
+<div class="cosmic-support">
+  <a href="mailto:your-email@example.com?subject=Greetings%20from%20the%20Cosmic%20Void&body=Hello%20Parth,%0A%0AI%20discovered%20your%20cosmic%20coffee%20stains%20and%20felt%20compelled%20to%20reach%20across%20the%20void..." 
+     class="cosmic-btn stellar-pulse" 
+     title="Send a message across the cosmic void">
+    <span class="cosmic-icon">🌌</span>
+    Whisper to the Void
   </a>
   
   <a href="https://your-payment-link.com" 
-     class="support-button support" 
+     class="cosmic-btn cosmic-glow" 
      target="_blank" 
-     title="Support my work">
-    <span class="icon">💝</span>
-    Support me
+     title="Support the cosmic journey">
+    <span class="cosmic-icon">✨</span>
+    Fuel the Stardust
   </a>
 </div>
 
 <script src="js/cosmic.js"></script>
-</body>
-</html>
-
 </body>
 </html>
