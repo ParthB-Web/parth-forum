@@ -526,43 +526,6 @@ footer {
   text-decoration: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  
-  h1 {
-    font-size: 2.8rem;
-    letter-spacing: 1px;
-  }
-  
-  .intro {
-    font-size: 1.2rem;
-    padding: 2rem;
-  }
-  
-  .nav-card {
-    padding: 2rem;
-  }
-  
-  .nav-section h2 {
-    font-size: 1.8rem;
-  }
-  
-  .cosmic-orb {
-    display: none;
-  }
-  
-  .content-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
-}
-
 /* Performance boosts */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -574,6 +537,8 @@ footer {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+} /* ← FIXED: Added missing closing brace */
+
 /* Cosmic Support Element */
 .support-element {
   position: fixed;
@@ -701,8 +666,42 @@ footer {
   opacity: 1;
 }
 
-/* Responsive adjustments */
+/* Responsive Design */
 @media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .intro {
+    font-size: 1.2rem;
+    padding: 2rem;
+  }
+  
+  .nav-card {
+    padding: 2rem;
+  }
+  
+  .nav-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .cosmic-orb {
+    display: none;
+  }
+  
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
   .support-element {
     bottom: 15px;
     right: 15px;
@@ -719,6 +718,4 @@ footer {
     margin-right: 6px;
     font-size: 0.9rem;
   }
-}
-
 }
