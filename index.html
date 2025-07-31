@@ -2,577 +2,388 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cosmic Coffee Stains</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Coffee Stains | Parth B.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #1a1a1a;
+      --secondary: #f5f5f5;
+      --accent: #8a6d3b;
+      --light-accent: #c0a57b;
+      --transition: all 0.3s ease;
+    }
+    
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
-      margin: 0;
-      padding: 60px 30px;
-      font-family: 'EB Garamond', serif;
-      font-size: 22px;
-      background: radial-gradient(circle at center, #0a0a0a, #1a1a1a);
-      color: #f2f2f2;
+      font-family: 'Crimson Text', serif;
+      background-color: var(--secondary);
+      color: var(--primary);
       line-height: 1.8;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      min-height: 100vh;
       overflow-x: hidden;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23c0a57b' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
       position: relative;
     }
-
-    h1 {
-      font-size: 85px;
-      margin-bottom: 10px;
-      letter-spacing: 1.8px;
-      text-align: left;
-      width: 100%;
-      max-width: 800px;
-      animation: stellarGlow 4s infinite ease-in-out;
-    }
-
-    @keyframes stellarGlow {
-      0%, 100% { 
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        opacity: 0.95;
-      }
-      50% { 
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
-        opacity: 1;
-      }
-    }
-
-    .author {
-      font-size: 35px;
-      margin-bottom: 40px;
-      opacity: 0.7;
-      font-weight: normal;
-      letter-spacing: 1px;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    p {
-      font-size: 40px;
-      max-width: 800px;
-      text-align: justify;
-      margin-bottom: 60px;
-      opacity: 0.85;
-    }
-
-    .nav-section {
-      margin-top: 40px;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    .nav-section h2 {
-      font-size: 50px;
-      margin-bottom: 20px;
-      font-weight: normal;
-      opacity: 0.8;
-    }
-
-    .nav-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    .nav-section li {
-      margin: 20px 0;
-      font-size: 40px;
-    }
-
-    .nav-section a {
-      text-decoration: none;
-      color: #f2f2f2;
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
       position: relative;
-      padding-left: 50px;
-      display: inline-block;
-      font-size: 40px;
-      transition: all 0.3s ease;
     }
-
-    .nav-section a::before {
-      content: "→";
+    
+    /* Header styles */
+    header {
+      padding: 2rem 0;
+      text-align: center;
+      position: relative;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .header-decoration {
       position: absolute;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      color: #999;
-      transition: transform 0.3s ease, color 0.3s ease;
-      animation: gentlePulse 2.5s infinite ease-in-out;
-    }
-
-    @keyframes gentlePulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 0.9; }
-    }
-
-    .nav-section a:hover::before {
-      transform: translateX(8px) translateY(-50%);
-      color: #fff;
-      animation: none;
-    }
-
-    .nav-section a:hover {
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-
-    #stars {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='%238a6d3b' d='M40,80 C80,40 120,40 160,80 C200,120 200,160 160,200 C120,160 80,160 40,120 C0,80 0,120 40,80 Z'/%3E%3C/svg%3E");
+      background-size: 200px;
+      background-position: center;
     }
-
-    .star {
+    
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1::after {
+      content: '';
       position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.1;
-      animation: twinkle 3s infinite;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--accent);
     }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 0.8; }
+    
+    .author {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-top: 1rem;
+      color: #666;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1px;
     }
-
-    .audio-control {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.8);
-      color: #f2f2f2;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-family: 'EB Garamond', serif;
-      font-size: 14px;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-      max-width: 250px;
+    
+    /* Introduction */
+    .intro {
+      max-width: 800px;
+      margin: 0 auto 4rem;
       text-align: center;
+      position: relative;
+      padding: 2rem;
+      font-size: 1.3rem;
+      line-height: 1.9;
     }
-
-    .audio-control:hover {
+    
+    .intro::before, .intro::after {
+      content: '"';
+      position: absolute;
+      font-size: 5rem;
+      color: var(--light-accent);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+    }
+    
+    .intro::before {
+      top: -20px;
+      left: 0;
+    }
+    
+    .intro::after {
+      bottom: -40px;
+      right: 0;
+    }
+    
+    /* Navigation Section */
+    .nav-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 4rem 0;
+    }
+    
+    .nav-card {
+      background: white;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 4px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .nav-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .nav-card:hover::before {
       opacity: 1;
     }
-
-    @media (max-width: 600px) {
+    
+    .nav-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--accent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    
+    .nav-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .nav-section p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .nav-link {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-link:hover {
+      background: #7a5d2b;
+      transform: translateY(-2px);
+    }
+    
+    .nav-link::after {
+      content: '→';
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    
+    .nav-link:hover::after {
+      opacity: 1;
+      right: 10px;
+    }
+    
+    /* Decorative elements */
+    .ink-blot {
+      position: absolute;
+      opacity: 0.03;
+      z-index: -1;
+    }
+    
+    .blot-1 {
+      top: 10%;
+      left: 5%;
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+    
+    .blot-2 {
+      bottom: 10%;
+      right: 5%;
+      width: 150px;
+      height: 150px;
+      background: var(--accent);
+      border-radius: 40% 60% 70% 30% / 40% 50% 50% 60%;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: #888;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
       h1 {
-        font-size: 42px;
-        animation: stellarGlow 4s infinite ease-in-out;
+        font-size: 2.5rem;
       }
-      .author {
-        font-size: 20px;
+      
+      .intro {
+        font-size: 1.1rem;
+        padding: 1rem;
       }
-      p {
-        font-size: 18px;
+      
+      .nav-card {
+        padding: 1.5rem;
       }
-      .nav-section h2 {
-        font-size: 32px;
-      }
-      .nav-section a {
-        font-size: 24px;
-        padding-left: 35px;
-      }
-      .nav-section a::before {
-        font-size: 24px;
-      }
-      .audio-control {
-        bottom: 10px;
-        right: 10px;
-        font-size: 12px;
-        padding: 8px 12px;
-        max-width: 200px;
+      
+      .blot-1, .blot-2 {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <div id="stars"></div>
-
-  <h1>Cosmic Coffee Stains</h1>
-  <div class="author">Parth B.</div>
+  <div class="ink-blot blot-1"></div>
+  <div class="ink-blot blot-2"></div>
   
-  <p>
-    A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia.
-    These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document
-    the process of becoming ungovernable by illusion. Each piece is a fragment of deeper inquiry: into love, pain, truth, reality
-    and the architecture of meaning.
-  </p>
-  
-  <div class="nav-section">
-    <h2>Explore:</h2>
-    <ul>
-      <li><a href="poetry/index.html">Poetry</a></li>
-      <li><a href="writings/index.html">Writings</a></li>
-    </ul>
-  </div>
-
-  <div id="audioStatus" class="audio-control">
-    Click anywhere to start cinematic ambience
+  <div class="container">
+    <header>
+      <div class="header-decoration"></div>
+      <div class="header-content fade-in">
+        <h1>Cosmic Coffee Stains</h1>
+        <div class="author">Parth B.</div>
+      </div>
+    </header>
+    
+    <section class="intro fade-in delay-1">
+      A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia. These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document the process of becoming ungovernable by illusion. Each piece is a fragment of deeper inquiry: into love, pain, truth, reality and the architecture of meaning.
+    </section>
+    
+    <div class="nav-section">
+      <div class="nav-card fade-in delay-2">
+        <h2>Poetry</h2>
+        <p>Collections of verse that explore the human condition through metaphor, rhythm, and raw emotion. Each poem is a journey into the depths of consciousness.</p>
+        <a href="poetry/index.html" class="nav-link">Explore Poetry</a>
+      </div>
+      
+      <div class="nav-card fade-in delay-3">
+        <h2>Writings</h2>
+        <p>Essays and meditations that confront reality head-on. These pieces dissect society, self, and meaning without anesthesia or pretense.</p>
+        <a href="writings/index.html" class="nav-link">Explore Writings</a>
+      </div>
+    </div>
+    
+    <footer class="fade-in">
+      © 2023 Cosmic Coffee Stains | An Archive of Raw Clarity
+    </footer>
   </div>
 
   <script>
-    // Stars Animation
-    const starCount = 150;
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      const size = Math.random() * 2 + 1;
-      star.style.width = `${size}px`;
-      star.style.height = `${size}px`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.animationDuration = `${Math.random() * 4 + 2}s`;
-      starsContainer.appendChild(star);
-    }
-
-    // Enhanced Cinematic Audio System
-    class CinematicCosmicAudio {
-      constructor() {
-        this.audioContext = null;
-        this.masterGain = null;
-        this.reverbNode = null;
-        this.isPlaying = false;
-        this.oscillators = [];
-        this.noiseNodes = [];
-      }
-
-      async init() {
-        try {
-          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          
-          if (this.audioContext.state === 'suspended') {
-            await this.audioContext.resume();
-          }
-          
-          this.masterGain = this.audioContext.createGain();
-          this.masterGain.connect(this.audioContext.destination);
-          this.masterGain.gain.setValueAtTime(0.8, this.audioContext.currentTime); // Increased volume
-          
-          // Create reverb for cinematic depth
-          this.createReverb();
-          
-          console.log('Cinematic cosmic audio initialized');
-          return true;
-        } catch (error) {
-          console.error('Audio initialization failed:', error);
-          return false;
-        }
-      }
-
-      createReverb() {
-        const convolver = this.audioContext.createConvolver();
-        const reverbGain = this.audioContext.createGain();
-        
-        // Create impulse response for reverb
-        const length = this.audioContext.sampleRate * 3;
-        const impulse = this.audioContext.createBuffer(2, length, this.audioContext.sampleRate);
-        
-        for (let channel = 0; channel < 2; channel++) {
-          const channelData = impulse.getChannelData(channel);
-          for (let i = 0; i < length; i++) {
-            channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2);
-          }
-        }
-        
-        convolver.buffer = impulse;
-        reverbGain.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-        
-        convolver.connect(reverbGain);
-        reverbGain.connect(this.masterGain);
-        
-        this.reverbNode = convolver;
-      }
-
-      createCinematicDrone(frequency, gain = 0.1, waveType = 'sine') {
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        const filter = this.audioContext.createBiquadFilter();
-        
-        oscillator.type = waveType;
-        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-        
-        // Enhanced frequency modulation
-        const lfo = this.audioContext.createOscillator();
-        const lfoGain = this.audioContext.createGain();
-        lfo.frequency.setValueAtTime(0.05 + Math.random() * 0.1, this.audioContext.currentTime);
-        lfoGain.gain.setValueAtTime(3, this.audioContext.currentTime);
-        
-        lfo.connect(lfoGain);
-        lfoGain.connect(oscillator.frequency);
-        
-        // Better filter settings for fuller sound
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(1200 + frequency * 0.5, this.audioContext.currentTime);
-        filter.Q.setValueAtTime(0.8, this.audioContext.currentTime);
-        
-        gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime + 4);
-        
-        oscillator.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(this.masterGain);
-        gainNode.connect(this.reverbNode); // Add reverb
-        
-        oscillator.start();
-        lfo.start();
-        
-        this.oscillators.push({ osc: oscillator, lfo: lfo, gain: gainNode, filter: filter });
-      }
-
-      createDramaticSweeps() {
-        const sweepOscillator = this.audioContext.createOscillator();
-        const sweepGain = this.audioContext.createGain();
-        const sweepFilter = this.audioContext.createBiquadFilter();
-        
-        sweepOscillator.type = 'sawtooth';
-        sweepOscillator.frequency.setValueAtTime(80, this.audioContext.currentTime);
-        
-        sweepFilter.type = 'highpass';
-        sweepFilter.frequency.setValueAtTime(100, this.audioContext.currentTime);
-        sweepFilter.Q.setValueAtTime(2, this.audioContext.currentTime);
-        
-        sweepGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        
-        sweepOscillator.connect(sweepFilter);
-        sweepFilter.connect(sweepGain);
-        sweepGain.connect(this.masterGain);
-        sweepGain.connect(this.reverbNode);
-        
-        sweepOscillator.start();
-        
-        // Create dramatic swells every 45-90 seconds
-        const createSwell = () => {
-          if (!this.isPlaying) return;
-          
-          const swellDuration = 8 + Math.random() * 6;
-          const peakGain = 0.08 + Math.random() * 0.04;
-          
-          sweepGain.gain.linearRampToValueAtTime(peakGain, this.audioContext.currentTime + swellDuration/2);
-          sweepGain.gain.linearRampToValueAtTime(0.01, this.audioContext.currentTime + swellDuration);
-          
-          sweepOscillator.frequency.linearRampToValueAtTime(120 + Math.random() * 40, this.audioContext.currentTime + swellDuration/3);
-          sweepOscillator.frequency.linearRampToValueAtTime(80, this.audioContext.currentTime + swellDuration);
-          
-          setTimeout(createSwell, (45 + Math.random() * 45) * 1000);
-        };
-        
-        setTimeout(createSwell, (10 + Math.random() * 20) * 1000);
-        this.oscillators.push({ osc: sweepOscillator, gain: sweepGain });
-      }
-
-      createEnhancedWind() {
-        const bufferSize = this.audioContext.sampleRate * 4;
-        const noiseBuffer = this.audioContext.createBuffer(2, bufferSize, this.audioContext.sampleRate);
-        
-        // Create stereo noise
-        for (let channel = 0; channel < 2; channel++) {
-          const output = noiseBuffer.getChannelData(channel);
-          for (let i = 0; i < bufferSize; i++) {
-            output[i] = (Math.random() * 2 - 1) * 0.15;
-          }
-        }
-        
-        const whiteNoise = this.audioContext.createBufferSource();
-        whiteNoise.buffer = noiseBuffer;
-        whiteNoise.loop = true;
-        
-        const windGain = this.audioContext.createGain();
-        const windFilter = this.audioContext.createBiquadFilter();
-        const windFilter2 = this.audioContext.createBiquadFilter();
-        
-        windFilter.type = 'bandpass';
-        windFilter.frequency.setValueAtTime(300, this.audioContext.currentTime);
-        windFilter.Q.setValueAtTime(0.3, this.audioContext.currentTime);
-        
-        windFilter2.type = 'highpass';
-        windFilter2.frequency.setValueAtTime(150, this.audioContext.currentTime);
-        
-        windGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        windGain.gain.linearRampToValueAtTime(0.06, this.audioContext.currentTime + 5);
-        
-        whiteNoise.connect(windFilter);
-        windFilter.connect(windFilter2);
-        windFilter2.connect(windGain);
-        windGain.connect(this.masterGain);
-        windGain.connect(this.reverbNode);
-        
-        whiteNoise.start();
-        this.noiseNodes.push(whiteNoise);
-      }
-
-      createCinematicSparkles() {
-        const playSparkle = () => {
-          if (!this.isPlaying) return;
-          
-          const frequencies = [523, 659, 784, 880, 1047, 1319, 1568]; // Higher, more musical frequencies
-          const freq = frequencies[Math.floor(Math.random() * frequencies.length)];
-          
-          const sparkle = this.audioContext.createOscillator();
-          const sparkleGain = this.audioContext.createGain();
-          const sparkleFilter = this.audioContext.createBiquadFilter();
-          
-          sparkle.type = Math.random() > 0.5 ? 'sine' : 'triangle';
-          sparkle.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-          
-          sparkleFilter.type = 'bandpass';
-          sparkleFilter.frequency.setValueAtTime(freq * 0.8, this.audioContext.currentTime);
-          sparkleFilter.Q.setValueAtTime(3, this.audioContext.currentTime);
-          
-          sparkleGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-          sparkleGain.gain.linearRampToValueAtTime(0.04, this.audioContext.currentTime + 0.1);
-          sparkleGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 3);
-          
-          sparkle.connect(sparkleFilter);
-          sparkleFilter.connect(sparkleGain);
-          sparkleGain.connect(this.masterGain);
-          sparkleGain.connect(this.reverbNode);
-          
-          sparkle.start();
-          sparkle.stop(this.audioContext.currentTime + 3);
-          
-          setTimeout(playSparkle, (Math.random() * 12 + 4) * 1000);
-        };
-        
-        setTimeout(playSparkle, (Math.random() * 8 + 2) * 1000);
-      }
-
-      createDeepPulse() {
-        const pulseOsc = this.audioContext.createOscillator();
-        const pulseGain = this.audioContext.createGain();
-        const pulseFilter = this.audioContext.createBiquadFilter();
-        
-        pulseOsc.type = 'sine';
-        pulseOsc.frequency.setValueAtTime(40, this.audioContext.currentTime);
-        
-        pulseFilter.type = 'lowpass';
-        pulseFilter.frequency.setValueAtTime(120, this.audioContext.currentTime);
-        pulseFilter.Q.setValueAtTime(2, this.audioContext.currentTime);
-        
-        pulseGain.gain.setValueAtTime(0.15, this.audioContext.currentTime);
-        
-        // Create pulsing effect
-        const pulseLFO = this.audioContext.createOscillator();
-        const pulseLFOGain = this.audioContext.createGain();
-        pulseLFO.frequency.setValueAtTime(0.03, this.audioContext.currentTime);
-        pulseLFOGain.gain.setValueAtTime(0.08, this.audioContext.currentTime);
-        
-        pulseLFO.connect(pulseLFOGain);
-        pulseLFOGain.connect(pulseGain.gain);
-        
-        pulseOsc.connect(pulseFilter);
-        pulseFilter.connect(pulseGain);
-        pulseGain.connect(this.masterGain);
-        
-        pulseOsc.start();
-        pulseLFO.start();
-        
-        this.oscillators.push({ osc: pulseOsc, lfo: pulseLFO, gain: pulseGain });
-      }
-
-      async startCinematicAmbience() {
-        if (this.isPlaying) return true;
-        
-        const initialized = await this.init();
-        if (!initialized) return false;
-        
-        this.isPlaying = true;
-        
-        // Enhanced harmonic layers with better volume balance
-        this.createCinematicDrone(55, 0.12, 'sine');     // Deep bass
-        this.createCinematicDrone(82.5, 0.10, 'sine');   // Sub bass harmonic
-        this.createCinematicDrone(110, 0.08, 'triangle'); // Low harmonic
-        this.createCinematicDrone(165, 0.07, 'sine');    // Mid harmonic
-        this.createCinematicDrone(220, 0.06, 'triangle'); // Higher harmonic
-        this.createCinematicDrone(330, 0.05, 'sine');    // Upper mid
-        this.createCinematicDrone(440, 0.04, 'triangle'); // High harmonic
-        
-        // Dramatic elements
-        this.createDeepPulse();
-        this.createDramaticSweeps();
-        this.createEnhancedWind();
-        this.createCinematicSparkles();
-        
-        return true;
-      }
-
-      stop() {
-        if (!this.isPlaying) return;
-        
-        this.isPlaying = false;
-        
-        this.oscillators.forEach(({ osc, lfo, gain }) => {
-          gain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 3);
-          osc.stop(this.audioContext.currentTime + 3);
-          if (lfo) lfo.stop(this.audioContext.currentTime + 3);
-        });
-        
-        this.noiseNodes.forEach(node => {
-          node.stop(this.audioContext.currentTime + 3);
-        });
-        
-        this.oscillators = [];
-        this.noiseNodes = [];
-      }
-    }
-
-    // Initialize Enhanced Audio System
-    const cosmicAudio = new CinematicCosmicAudio();
-    const audioStatus = document.getElementById('audioStatus');
-
-    // Auto-start on first click
-    document.addEventListener('click', async () => {
-      if (!cosmicAudio.isPlaying) {
-        audioStatus.textContent = 'Starting cinematic ambience...';
-        const success = await cosmicAudio.startCinematicAmbience();
-        if (success) {
-          audioStatus.textContent = 'Cinematic ambience playing • Press SPACE to toggle';
-        } else {
-          audioStatus.textContent = 'Audio not supported by browser';
-        }
-      }
-    }, { once: true });
-
-    // Spacebar toggle
-    document.addEventListener('keydown', async (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault();
-        if (cosmicAudio.isPlaying) {
-          cosmicAudio.stop();
-          audioStatus.textContent = 'Cinematic ambience stopped • Press SPACE to restart';
-        } else {
-          const success = await cosmicAudio.startCinematicAmbience();
-          if (success) {
-            audioStatus.textContent = 'Cinematic ambience playing • Press SPACE to toggle';
-          }
-        }
-      }
+    // Add subtle hover effects to navigation cards
+    document.querySelectorAll('.nav-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px)';
+        this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 5px 20px rgba(0,0,0,0.03)';
+      });
     });
-
-    // Hide audio status after 10 seconds
-    setTimeout(() => {
-      if (audioStatus) {
-        audioStatus.style.opacity = '0.3';
-      }
-    }, 10000);
+    
+    // Add ink blot effect on click
+    document.addEventListener('click', function(e) {
+      const ink = document.createElement('div');
+      ink.className = 'ink-blot';
+      ink.style.left = e.clientX + 'px';
+      ink.style.top = e.clientY + 'px';
+      ink.style.width = '50px';
+      ink.style.height = '50px';
+      ink.style.backgroundColor = '#8a6d3b';
+      ink.style.opacity = '0.1';
+      ink.style.borderRadius = '50%';
+      ink.style.position = 'fixed';
+      ink.style.transform = 'translate(-50%, -50%) scale(0)';
+      ink.style.transition = 'transform 1s, opacity 1.5s';
+      ink.style.zIndex = '10';
+      
+      document.body.appendChild(ink);
+      
+      setTimeout(() => {
+        ink.style.transform = 'translate(-50%, -50%) scale(20)';
+        ink.style.opacity = '0';
+      }, 10);
+      
+      setTimeout(() => {
+        document.body.removeChild(ink);
+      }, 1500);
+    });
+    
+    // Animate elements on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.nav-card, .intro, footer').forEach(el => {
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
