@@ -1,9 +1,89 @@
-<!-- Back to home link: -->
-<a href="../index.html">← Home</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poetry | Cosmic Coffee Stains</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Poetry page specific styles */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1px;
+    }
+    
+    .content-card p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .content-card small {
+      color: rgba(255,255,255,0.5);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="stars"></div>
+  
+  <nav class="nav-home">
+    <a href="../index.html">← Home</a>
+  </nav>
+  
+  <div class="container">
+    <header class="page-header">
+      <h1 class="page-title">Poetry</h1>
+      <div class="page-subtitle">Verses from the cosmic void</div>
+    </header>
+    
+    <div class="content-grid">
+      <div class="content-card">
+        <a href="piece1.html">
+          <h3>The Weight of Stars</h3>
+          <p>A meditation on the burden of cosmic consciousness and the weight we carry when we truly see the universe...</p>
+          <small>Written March 2024</small>
+        </a>
+      </div>
+      
+      <div class="content-card">
+        <a href="piece2.html">
+          <h3>Coffee Stains on Paper</h3>
+          <p>An exploration of the mundane made sacred, where morning rituals become cosmic ceremonies...</p>
+          <small>Written February 2024</small>
+        </a>
+      </div>
+      
+      <div class="content-card">
+        <a href="piece3.html">
+          <h3>Ungovernable</h3>
+          <p>On breaking free from the illusions that bind us to false realities and prescribed meanings...</p>
+          <small>Written January 2024</small>
+        </a>
+      </div>
+      
+      <div class="content-card">
+        <a href="piece4.html">
+          <h3>Fragments of Clarity</h3>
+          <p>Scattered thoughts that coalesce into moments of understanding about love, loss, and existence...</p>
+          <small>Written December 2023</small>
+        </a>
+      </div>
+    </div>
+  </div>
 
-<!-- CSS link (go up one folder): -->
-<link rel="stylesheet" href="../css/style.css">
-
-<!-- Links to individual poems: -->
-<a href="piece1.html">The Weight of Stars</a>
-<a href="piece2.html">Coffee Stains on Paper</a>
+  <script src="../js/cosmic.js"></script>
+</body>
+</html>
