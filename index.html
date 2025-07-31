@@ -4,11 +4,144 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cosmic Coffee Stains | Parth B.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Home page specific styles only */
-    .home-intro {
+    :root {
+      --cosmic-dark: #0a0a0a;
+      --cosmic-medium: #1a1a1a;
+      --cosmic-light: #f2f2f2;
+      --cosmic-accent: #8a6d3b;
+      --cosmic-gold: #c0a57b;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'EB Garamond', serif;
+      background: radial-gradient(circle at center, var(--cosmic-dark), var(--cosmic-medium));
+      color: var(--cosmic-light);
+      line-height: 1.8;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    /* Cosmic Stars Background */
+    #stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: twinkle 3s infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.8; }
+    }
+    
+    /* Floating Cosmic Particles */
+    .cosmic-particle {
+      position: absolute;
+      background: var(--cosmic-gold);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 8s infinite ease-in-out;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Header with Stellar Glow */
+    header {
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    h1 {
+      font-size: 4rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      animation: stellarGlow 4s infinite ease-in-out;
+    }
+    
+    @keyframes stellarGlow {
+      0%, 100% { 
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        opacity: 0.95;
+      }
+      50% { 
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+        opacity: 1;
+      }
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cosmic-gold), transparent);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    
+    .author {
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-top: 1.5rem;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+    
+    /* Cosmic Introduction */
+    .intro {
       max-width: 900px;
       margin: 0 auto 4rem;
       text-align: center;
@@ -20,14 +153,28 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 8px;
       backdrop-filter: blur(10px);
-      transition: all 0.4s ease;
     }
-
-    .home-intro:hover {
-      background: rgba(255,255,255,0.03);
-      transform: translateY(-2px);
+    
+    .intro::before, .intro::after {
+      content: '"';
+      position: absolute;
+      font-size: 6rem;
+      color: var(--cosmic-gold);
+      opacity: 0.2;
+      font-family: Georgia, serif;
     }
-
+    
+    .intro::before {
+      top: -10px;
+      left: 20px;
+    }
+    
+    .intro::after {
+      bottom: -40px;
+      right: 20px;
+    }
+    
+    /* Cosmic Navigation Cards */
     .nav-section {
       display: flex;
       flex-wrap: wrap;
@@ -35,7 +182,7 @@
       justify-content: center;
       margin: 5rem 0;
     }
-
+    
     .nav-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.1);
@@ -45,12 +192,12 @@
       width: 100%;
       max-width: 500px;
       text-align: center;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: var(--transition);
       position: relative;
       overflow: hidden;
       cursor: pointer;
     }
-
+    
     .nav-card::before {
       content: '';
       position: absolute;
@@ -61,18 +208,18 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
       transition: left 0.8s ease;
     }
-
+    
     .nav-card:hover::before {
       left: 100%;
     }
-
+    
     .nav-card:hover {
-      transform: translateY(-15px) scale(1.02);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      transform: translateY(-15px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       border-color: var(--cosmic-gold);
     }
-
-    .nav-card h2 {
+    
+    .nav-section h2 {
       font-family: 'EB Garamond', serif;
       font-weight: 500;
       font-size: 2.2rem;
@@ -80,8 +227,8 @@
       color: var(--cosmic-light);
       position: relative;
     }
-
-    .nav-card h2::after {
+    
+    .nav-section h2::after {
       content: '';
       position: absolute;
       bottom: -8px;
@@ -91,21 +238,15 @@
       height: 1px;
       background: var(--cosmic-gold);
       opacity: 0.6;
-      transition: all 0.3s ease;
     }
-
-    .nav-card:hover h2::after {
-      width: 80px;
-      opacity: 1;
-    }
-
-    .nav-card p {
+    
+    .nav-section p {
       font-size: 1.2rem;
       color: rgba(255,255,255,0.8);
       margin-bottom: 2.5rem;
       line-height: 1.7;
     }
-
+    
     .nav-link {
       display: inline-block;
       padding: 1rem 2.5rem;
@@ -117,11 +258,11 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 400;
       letter-spacing: 1px;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: var(--transition);
       position: relative;
       overflow: hidden;
     }
-
+    
     .nav-link::before {
       content: '→';
       position: absolute;
@@ -130,28 +271,27 @@
       transform: translateY(-50%);
       font-size: 1.2rem;
       color: var(--cosmic-gold);
-      transition: all 0.3s ease;
+      transition: var(--transition);
       animation: arrowPulse 2s infinite;
     }
-
+    
     @keyframes arrowPulse {
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
     }
-
+    
     .nav-link:hover::before {
       left: 15px;
       animation: none;
     }
-
+    
     .nav-link:hover {
       background: var(--cosmic-gold);
       color: var(--cosmic-dark);
       transform: translateY(-3px);
       padding-left: 3.5rem;
-      box-shadow: 0 8px 25px rgba(192, 165, 123, 0.3);
     }
-
+    
     /* Cosmic Orbs */
     .cosmic-orb {
       position: absolute;
@@ -160,12 +300,12 @@
       border: 1px solid rgba(192, 165, 123, 0.2);
       animation: orbit 20s infinite linear;
     }
-
+    
     @keyframes orbit {
       0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
       100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
     }
-
+    
     .orb-1 {
       top: 20%;
       left: 10%;
@@ -173,7 +313,7 @@
       height: 80px;
       animation-duration: 25s;
     }
-
+    
     .orb-2 {
       bottom: 20%;
       right: 10%;
@@ -182,9 +322,83 @@
       animation-duration: 30s;
       animation-direction: reverse;
     }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* Interactive Click Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cosmic-gold), transparent);
+      transform: scale(0);
+      animation: ripple-animation 0.8s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Scroll Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .delay-1 { transition-delay: 0.2s; }
+    .delay-2 { transition-delay: 0.4s; }
+    .delay-3 { transition-delay: 0.6s; }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2.8rem;
+        letter-spacing: 1px;
+      }
+      
+      .intro {
+        font-size: 1.2rem;
+        padding: 2rem;
+      }
+      
+      .nav-card {
+        padding: 2rem;
+      }
+      
+      .nav-section h2 {
+        font-size: 1.8rem;
+      }
+      
+      .cosmic-orb {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Starry Background -->
   <div id="stars"></div>
   
   <!-- Cosmic Orbs -->
@@ -192,30 +406,184 @@
   <div class="cosmic-orb orb-2"></div>
   
   <div class="container">
-    <header class="page-header">
-      <h1 class="page-title">Cosmic Coffee Stains</h1>
-      <div class="page-subtitle">Parth B.</div>
+    <header>
+      <div class="header-content fade-in">
+        <h1>Cosmic Coffee Stains</h1>
+        <div class="author">Parth B.</div>
+      </div>
     </header>
     
-    <section class="home-intro">
+    <section class="intro fade-in delay-1">
       A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia. These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document the process of becoming ungovernable by illusion. Each piece is a fragment of deeper inquiry: into love, pain, truth, reality and the architecture of meaning.
     </section>
     
     <div class="nav-section">
-      <div class="nav-card">
+      <div class="nav-card fade-in delay-2">
         <h2>Poetry</h2>
         <p>Collections of verse that explore the human condition through metaphor, rhythm, and raw emotion. Each poem is a journey into the depths of consciousness.</p>
         <a href="poetry/index.html" class="nav-link">Explore Poetry</a>
       </div>
       
-      <div class="nav-card">
+      <div class="nav-card fade-in delay-3">
         <h2>Writings</h2>
         <p>Essays and meditations that confront reality head-on. These pieces dissect society, self, and meaning without anesthesia or pretense.</p>
         <a href="writings/index.html" class="nav-link">Explore Writings</a>
       </div>
     </div>
+    
+    <footer class="fade-in">
+      © 2023 Cosmic Coffee Stains | An Archive of Raw Clarity
+    </footer>
   </div>
 
-  <script src="js/cosmic.js"></script>
+  <script>
+    // Create Starry Background
+    const starCount = 200;
+    const starsContainer = document.getElementById('stars');
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 2 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${Math.random() * 4 + 2}s`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      starsContainer.appendChild(star);
+    }
+    
+    // Create Floating Cosmic Particles
+    function createCosmicParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('cosmic-particle');
+      const size = Math.random() * 4 + 2;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
+      particle.style.animationDelay = `${Math.random() * 2}s`;
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 10000);
+    }
+    
+    // Generate particles periodically
+    setInterval(createCosmicParticle, 3000);
+    
+    // Interactive Click Ripple Effect
+    document.addEventListener('click', function(e) {
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple');
+      const size = 60;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.pageX - size / 2) + 'px';
+      ripple.style.top = (e.pageY - size / 2) + 'px';
+      ripple.style.opacity = '0.6';
+      
+      document.body.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 800);
+    });
+    
+    // Enhanced Navigation Card Interactions
+    document.querySelectorAll('.nav-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-15px) scale(1.02)';
+        this.style.boxShadow = '0 25px 50px rgba(0,0,0,0.4)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+        this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+      });
+    });
+    
+    // Scroll Animation Observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Cosmic Cursor Trail Effect
+    let mouseX = 0, mouseY = 0;
+    let trail = [];
+    
+    document.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    function createTrail() {
+      if (trail.length > 5) {
+        trail[0].remove();
+        trail.shift();
+      }
+      
+      const dot = document.createElement('div');
+      dot.style.cssText = `
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: rgba(192, 165, 123, 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1000;
+        left: ${mouseX}px;
+        top: ${mouseY}px;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.5s ease;
+      `;
+      
+      document.body.appendChild(dot);
+      trail.push(dot);
+      
+      setTimeout(() => {
+        dot.style.opacity = '0';
+      }, 100);
+      
+      setTimeout(() => {
+        if (dot.parentNode) {
+          dot.remove();
+        }
+      }, 600);
+    }
+    
+    setInterval(createTrail, 50);
+    
+    // Parallax Effect for Cosmic Orbs
+    document.addEventListener('mousemove', function(e) {
+      const orbs = document.querySelectorAll('.cosmic-orb');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+      
+      orbs.forEach((orb, index) => {
+        const speed = (index + 1) * 0.5;
+        const x = (mouseX - 0.5) * speed * 50;
+        const y = (mouseY - 0.5) * speed * 50;
+        orb.style.transform += ` translate(${x}px, ${y}px)`;
+      });
+    });
+  </script>
 </body>
 </html>
