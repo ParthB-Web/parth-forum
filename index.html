@@ -27,13 +27,31 @@
     }
 
     h1 {
-      font-size: 100px;
-      margin-bottom: 10px;
-      letter-spacing: 1.5px;
-      text-align: left;
-      width: 100%;
-      max-width: 800px;
-    }
+  font-size: 100px;
+  margin-bottom: 10px;
+  letter-spacing: 1.5px;
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+  animation: stellarGlow 4s infinite ease-in-out;
+}
+
+@keyframes stellarGlow {
+  0%, 100% { 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    opacity: 0.95;
+  }
+  50% { 
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+    opacity: 1;
+  }
+}
+    @media (max-width: 600px) {
+  h1 {
+    font-size: 42px;
+    animation: stellarGlow 4s infinite ease-in-out; /* Keep the same animation */
+  }
+}
 
     .author {
       font-size: 35px;
