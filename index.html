@@ -68,30 +68,34 @@
       font-size: 40px;
     }
 
-    .nav-section a {
-  text-decoration: none;
-  color: #f2f2f2;
-  position: relative;
-  padding-left: 40px;  /* Increased from 28px to 40px */
-  display: inline-block;
-  font-size: 40px;
-  transition: all 0.3s ease;
-}
-
-.nav-section a::before {
+    .nav-section a::before {
   content: "→";
   position: absolute;
-  left: -5px;  /* Move arrow slightly left */
+  left: -5px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 40px;
   color: #999;
   transition: transform 0.3s ease, color 0.3s ease;
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0%, 90%, 100% { 
+    color: #999; 
+    text-shadow: none;
+  }
+  5%, 85% { 
+    color: #bbb; 
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
 }
 
 .nav-section a:hover::before {
   transform: translateX(6px) translateY(-50%);
   color: #fff;
+  animation: none;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
     #stars {
       position: fixed;
