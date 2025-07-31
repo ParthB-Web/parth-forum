@@ -225,7 +225,7 @@
   </div>
 
   <div id="audioStatus" class="audio-control">
-    Click anywhere to start cosmic ambience
+    Click anywhere to start cinematic ambience
   </div>
 
   <script>
@@ -244,30 +244,33 @@
       starsContainer.appendChild(star);
     }
 
-    // Cosmic Audio System
-    class CosmicAudio {
+    // Enhanced Cinematic Audio System
+    class CinematicCosmicAudio {
       constructor() {
         this.audioContext = null;
         this.masterGain = null;
+        this.reverbNode = null;
         this.isPlaying = false;
         this.oscillators = [];
-        this.noiseNode = null;
+        this.noiseNodes = [];
       }
 
       async init() {
         try {
           this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
           
-          // Resume context if suspended
           if (this.audioContext.state === 'suspended') {
             await this.audioContext.resume();
           }
           
           this.masterGain = this.audioContext.createGain();
           this.masterGain.connect(this.audioContext.destination);
-          this.masterGain.gain.setValueAtTime(0.6, this.audioContext.currentTime);
+          this.masterGain.gain.setValueAtTime(0.8, this.audioContext.currentTime); // Increased volume
           
-          console.log('Cosmic audio initialized successfully');
+          // Create reverb for cinematic depth
+          this.createReverb();
+          
+          console.log('Cinematic cosmic audio initialized');
           return true;
         } catch (error) {
           console.error('Audio initialization failed:', error);
@@ -275,47 +278,117 @@
         }
       }
 
-      createCosmicDrone(frequency, gain = 0.05) {
+      createReverb() {
+        const convolver = this.audioContext.createConvolver();
+        const reverbGain = this.audioContext.createGain();
+        
+        // Create impulse response for reverb
+        const length = this.audioContext.sampleRate * 3;
+        const impulse = this.audioContext.createBuffer(2, length, this.audioContext.sampleRate);
+        
+        for (let channel = 0; channel < 2; channel++) {
+          const channelData = impulse.getChannelData(channel);
+          for (let i = 0; i < length; i++) {
+            channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2);
+          }
+        }
+        
+        convolver.buffer = impulse;
+        reverbGain.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+        
+        convolver.connect(reverbGain);
+        reverbGain.connect(this.masterGain);
+        
+        this.reverbNode = convolver;
+      }
+
+      createCinematicDrone(frequency, gain = 0.1, waveType = 'sine') {
         const oscillator = this.audioContext.createOscillator();
         const gainNode = this.audioContext.createGain();
         const filter = this.audioContext.createBiquadFilter();
         
-        oscillator.type = 'sine';
+        oscillator.type = waveType;
         oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
         
-        // Add subtle frequency modulation
+        // Enhanced frequency modulation
         const lfo = this.audioContext.createOscillator();
         const lfoGain = this.audioContext.createGain();
-        lfo.frequency.setValueAtTime(0.1, this.audioContext.currentTime);
-        lfoGain.gain.setValueAtTime(2, this.audioContext.currentTime);
+        lfo.frequency.setValueAtTime(0.05 + Math.random() * 0.1, this.audioContext.currentTime);
+        lfoGain.gain.setValueAtTime(3, this.audioContext.currentTime);
         
         lfo.connect(lfoGain);
         lfoGain.connect(oscillator.frequency);
         
+        // Better filter settings for fuller sound
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, this.audioContext.currentTime);
-        filter.Q.setValueAtTime(1, this.audioContext.currentTime);
+        filter.frequency.setValueAtTime(1200 + frequency * 0.5, this.audioContext.currentTime);
+        filter.Q.setValueAtTime(0.8, this.audioContext.currentTime);
         
         gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime + 3);
+        gainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime + 4);
         
         oscillator.connect(filter);
         filter.connect(gainNode);
         gainNode.connect(this.masterGain);
+        gainNode.connect(this.reverbNode); // Add reverb
         
         oscillator.start();
         lfo.start();
         
-        this.oscillators.push({ osc: oscillator, lfo: lfo, gain: gainNode });
+        this.oscillators.push({ osc: oscillator, lfo: lfo, gain: gainNode, filter: filter });
       }
 
-      createCosmicWind() {
-        const bufferSize = this.audioContext.sampleRate * 2;
-        const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
+      createDramaticSweeps() {
+        const sweepOscillator = this.audioContext.createOscillator();
+        const sweepGain = this.audioContext.createGain();
+        const sweepFilter = this.audioContext.createBiquadFilter();
         
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * 0.1;
+        sweepOscillator.type = 'sawtooth';
+        sweepOscillator.frequency.setValueAtTime(80, this.audioContext.currentTime);
+        
+        sweepFilter.type = 'highpass';
+        sweepFilter.frequency.setValueAtTime(100, this.audioContext.currentTime);
+        sweepFilter.Q.setValueAtTime(2, this.audioContext.currentTime);
+        
+        sweepGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+        
+        sweepOscillator.connect(sweepFilter);
+        sweepFilter.connect(sweepGain);
+        sweepGain.connect(this.masterGain);
+        sweepGain.connect(this.reverbNode);
+        
+        sweepOscillator.start();
+        
+        // Create dramatic swells every 45-90 seconds
+        const createSwell = () => {
+          if (!this.isPlaying) return;
+          
+          const swellDuration = 8 + Math.random() * 6;
+          const peakGain = 0.08 + Math.random() * 0.04;
+          
+          sweepGain.gain.linearRampToValueAtTime(peakGain, this.audioContext.currentTime + swellDuration/2);
+          sweepGain.gain.linearRampToValueAtTime(0.01, this.audioContext.currentTime + swellDuration);
+          
+          sweepOscillator.frequency.linearRampToValueAtTime(120 + Math.random() * 40, this.audioContext.currentTime + swellDuration/3);
+          sweepOscillator.frequency.linearRampToValueAtTime(80, this.audioContext.currentTime + swellDuration);
+          
+          setTimeout(createSwell, (45 + Math.random() * 45) * 1000);
+        };
+        
+        setTimeout(createSwell, (10 + Math.random() * 20) * 1000);
+        this.oscillators.push({ osc: sweepOscillator, gain: sweepGain });
+      }
+
+      createEnhancedWind() {
+        const bufferSize = this.audioContext.sampleRate * 4;
+        const noiseBuffer = this.audioContext.createBuffer(2, bufferSize, this.audioContext.sampleRate);
+        
+        // Create stereo noise
+        for (let channel = 0; channel < 2; channel++) {
+          const output = noiseBuffer.getChannelData(channel);
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = (Math.random() * 2 - 1) * 0.15;
+          }
         }
         
         const whiteNoise = this.audioContext.createBufferSource();
@@ -324,23 +397,98 @@
         
         const windGain = this.audioContext.createGain();
         const windFilter = this.audioContext.createBiquadFilter();
+        const windFilter2 = this.audioContext.createBiquadFilter();
         
         windFilter.type = 'bandpass';
-        windFilter.frequency.setValueAtTime(200, this.audioContext.currentTime);
-        windFilter.Q.setValueAtTime(0.5, this.audioContext.currentTime);
+        windFilter.frequency.setValueAtTime(300, this.audioContext.currentTime);
+        windFilter.Q.setValueAtTime(0.3, this.audioContext.currentTime);
+        
+        windFilter2.type = 'highpass';
+        windFilter2.frequency.setValueAtTime(150, this.audioContext.currentTime);
         
         windGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        windGain.gain.linearRampToValueAtTime(0.03, this.audioContext.currentTime + 4);
+        windGain.gain.linearRampToValueAtTime(0.06, this.audioContext.currentTime + 5);
         
         whiteNoise.connect(windFilter);
-        windFilter.connect(windGain);
+        windFilter.connect(windFilter2);
+        windFilter2.connect(windGain);
         windGain.connect(this.masterGain);
+        windGain.connect(this.reverbNode);
         
         whiteNoise.start();
-        this.noiseNode = whiteNoise;
+        this.noiseNodes.push(whiteNoise);
       }
 
-      async startCosmicAmbience() {
+      createCinematicSparkles() {
+        const playSparkle = () => {
+          if (!this.isPlaying) return;
+          
+          const frequencies = [523, 659, 784, 880, 1047, 1319, 1568]; // Higher, more musical frequencies
+          const freq = frequencies[Math.floor(Math.random() * frequencies.length)];
+          
+          const sparkle = this.audioContext.createOscillator();
+          const sparkleGain = this.audioContext.createGain();
+          const sparkleFilter = this.audioContext.createBiquadFilter();
+          
+          sparkle.type = Math.random() > 0.5 ? 'sine' : 'triangle';
+          sparkle.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+          
+          sparkleFilter.type = 'bandpass';
+          sparkleFilter.frequency.setValueAtTime(freq * 0.8, this.audioContext.currentTime);
+          sparkleFilter.Q.setValueAtTime(3, this.audioContext.currentTime);
+          
+          sparkleGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+          sparkleGain.gain.linearRampToValueAtTime(0.04, this.audioContext.currentTime + 0.1);
+          sparkleGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 3);
+          
+          sparkle.connect(sparkleFilter);
+          sparkleFilter.connect(sparkleGain);
+          sparkleGain.connect(this.masterGain);
+          sparkleGain.connect(this.reverbNode);
+          
+          sparkle.start();
+          sparkle.stop(this.audioContext.currentTime + 3);
+          
+          setTimeout(playSparkle, (Math.random() * 12 + 4) * 1000);
+        };
+        
+        setTimeout(playSparkle, (Math.random() * 8 + 2) * 1000);
+      }
+
+      createDeepPulse() {
+        const pulseOsc = this.audioContext.createOscillator();
+        const pulseGain = this.audioContext.createGain();
+        const pulseFilter = this.audioContext.createBiquadFilter();
+        
+        pulseOsc.type = 'sine';
+        pulseOsc.frequency.setValueAtTime(40, this.audioContext.currentTime);
+        
+        pulseFilter.type = 'lowpass';
+        pulseFilter.frequency.setValueAtTime(120, this.audioContext.currentTime);
+        pulseFilter.Q.setValueAtTime(2, this.audioContext.currentTime);
+        
+        pulseGain.gain.setValueAtTime(0.15, this.audioContext.currentTime);
+        
+        // Create pulsing effect
+        const pulseLFO = this.audioContext.createOscillator();
+        const pulseLFOGain = this.audioContext.createGain();
+        pulseLFO.frequency.setValueAtTime(0.03, this.audioContext.currentTime);
+        pulseLFOGain.gain.setValueAtTime(0.08, this.audioContext.currentTime);
+        
+        pulseLFO.connect(pulseLFOGain);
+        pulseLFOGain.connect(pulseGain.gain);
+        
+        pulseOsc.connect(pulseFilter);
+        pulseFilter.connect(pulseGain);
+        pulseGain.connect(this.masterGain);
+        
+        pulseOsc.start();
+        pulseLFO.start();
+        
+        this.oscillators.push({ osc: pulseOsc, lfo: pulseLFO, gain: pulseGain });
+      }
+
+      async startCinematicAmbience() {
         if (this.isPlaying) return true;
         
         const initialized = await this.init();
@@ -348,81 +496,55 @@
         
         this.isPlaying = true;
         
-        // Create harmonic drones with increased volume
-        this.createCosmicDrone(55, 0.08);    // Deep bass
-        this.createCosmicDrone(110, 0.06);   // Low harmonic
-        this.createCosmicDrone(165, 0.05);   // Mid harmonic
-        this.createCosmicDrone(220, 0.04);   // Higher harmonic
+        // Enhanced harmonic layers with better volume balance
+        this.createCinematicDrone(55, 0.12, 'sine');     // Deep bass
+        this.createCinematicDrone(82.5, 0.10, 'sine');   // Sub bass harmonic
+        this.createCinematicDrone(110, 0.08, 'triangle'); // Low harmonic
+        this.createCinematicDrone(165, 0.07, 'sine');    // Mid harmonic
+        this.createCinematicDrone(220, 0.06, 'triangle'); // Higher harmonic
+        this.createCinematicDrone(330, 0.05, 'sine');    // Upper mid
+        this.createCinematicDrone(440, 0.04, 'triangle'); // High harmonic
         
-        this.createCosmicWind();
-        this.createSparkles();
+        // Dramatic elements
+        this.createDeepPulse();
+        this.createDramaticSweeps();
+        this.createEnhancedWind();
+        this.createCinematicSparkles();
         
         return true;
-      }
-
-      createSparkles() {
-        const playSparkle = () => {
-          if (!this.isPlaying) return;
-          
-          const frequencies = [440, 554, 659, 880, 1108];
-          const freq = frequencies[Math.floor(Math.random() * frequencies.length)];
-          
-          const sparkle = this.audioContext.createOscillator();
-          const sparkleGain = this.audioContext.createGain();
-          const sparkleFilter = this.audioContext.createBiquadFilter();
-          
-          sparkle.type = 'sine';
-          sparkle.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-          
-          sparkleFilter.type = 'highpass';
-          sparkleFilter.frequency.setValueAtTime(400, this.audioContext.currentTime);
-          
-          sparkleGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-          sparkleGain.gain.linearRampToValueAtTime(0.02, this.audioContext.currentTime + 0.1);
-          sparkleGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 2);
-          
-          sparkle.connect(sparkleFilter);
-          sparkleFilter.connect(sparkleGain);
-          sparkleGain.connect(this.masterGain);
-          
-          sparkle.start();
-          sparkle.stop(this.audioContext.currentTime + 2);
-          
-          setTimeout(playSparkle, (Math.random() * 17 + 8) * 1000);
-        };
-        
-        setTimeout(playSparkle, (Math.random() * 10 + 3) * 1000);
       }
 
       stop() {
         if (!this.isPlaying) return;
         
         this.isPlaying = false;
+        
         this.oscillators.forEach(({ osc, lfo, gain }) => {
-          gain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 2);
-          osc.stop(this.audioContext.currentTime + 2);
-          lfo.stop(this.audioContext.currentTime + 2);
+          gain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 3);
+          osc.stop(this.audioContext.currentTime + 3);
+          if (lfo) lfo.stop(this.audioContext.currentTime + 3);
         });
         
-        if (this.noiseNode) {
-          this.noiseNode.stop(this.audioContext.currentTime + 2);
-        }
+        this.noiseNodes.forEach(node => {
+          node.stop(this.audioContext.currentTime + 3);
+        });
         
         this.oscillators = [];
+        this.noiseNodes = [];
       }
     }
 
-    // Initialize Audio System
-    const cosmicAudio = new CosmicAudio();
+    // Initialize Enhanced Audio System
+    const cosmicAudio = new CinematicCosmicAudio();
     const audioStatus = document.getElementById('audioStatus');
 
     // Auto-start on first click
     document.addEventListener('click', async () => {
       if (!cosmicAudio.isPlaying) {
-        audioStatus.textContent = 'Starting cosmic ambience...';
-        const success = await cosmicAudio.startCosmicAmbience();
+        audioStatus.textContent = 'Starting cinematic ambience...';
+        const success = await cosmicAudio.startCinematicAmbience();
         if (success) {
-          audioStatus.textContent = 'Cosmic ambience playing • Press SPACE to toggle';
+          audioStatus.textContent = 'Cinematic ambience playing • Press SPACE to toggle';
         } else {
           audioStatus.textContent = 'Audio not supported by browser';
         }
@@ -435,11 +557,11 @@
         e.preventDefault();
         if (cosmicAudio.isPlaying) {
           cosmicAudio.stop();
-          audioStatus.textContent = 'Cosmic ambience stopped • Press SPACE to restart';
+          audioStatus.textContent = 'Cinematic ambience stopped • Press SPACE to restart';
         } else {
-          const success = await cosmicAudio.startCosmicAmbience();
+          const success = await cosmicAudio.startCinematicAmbience();
           if (success) {
-            audioStatus.textContent = 'Cosmic ambience playing • Press SPACE to toggle';
+            audioStatus.textContent = 'Cinematic ambience playing • Press SPACE to toggle';
           }
         }
       }
