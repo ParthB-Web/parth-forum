@@ -1,56 +1,93 @@
-// Create Starry Background
+// Enhanced performance with requestAnimationFrame
+let isStarsCreated = false;
+
 function createStars() {
+  if (isStarsCreated) return;
+  
   const starCount = 200;
   const starsContainer = document.getElementById('stars');
   
   if (!starsContainer) return;
   
+  const fragment = document.createDocumentFragment();
+  
   for (let i = 0; i < starCount; i++) {
     const star = document.createElement('div');
     star.classList.add('star');
     const size = Math.random() * 2 + 1;
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDuration = `${Math.random() * 4 + 2}s`;
-    star.style.animationDelay = `${Math.random() * 2}s`;
-    starsContainer.appendChild(star);
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      top: ${Math.random() * 100}%;
+      left: ${Math.random() * 100}%;
+      animation-duration: ${Math.random() * 4 + 2}s;
+      animation-delay: ${Math.random() * 2}s;
+    `;
+    fragment.appendChild(star);
   }
+  
+  starsContainer.appendChild(fragment);
+  isStarsCreated = true;
 }
 
-// Interactive Click Ripple Effect
+// Throttled ripple effect
+let rippleTimeout;
 function createRippleEffect() {
   document.addEventListener('click', function(e) {
+    if (rippleTimeout) return;
+    
+    rippleTimeout = setTimeout(() => {
+      rippleTimeout = null;
+    }, 100);
+    
     const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    const size = 60;
+    
     ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(192, 165, 123, 0.3), transparent);
-      transform: scale(0);
-      animation: ripple-animation 0.8s linear;
-      pointer-events: none;
-      width: 60px;
-      height: 60px;
-      left: ${e.pageX - 30}px;
-      top: ${e.pageY - 30}px;
-      z-index: 1000;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${e.pageX - size / 2}px;
+      top: ${e.pageY - size / 2}px;
+      opacity: 0.6;
     `;
     
     document.body.appendChild(ripple);
     
     setTimeout(() => {
-      ripple.remove();
+      if (ripple.parentNode) {
+        ripple.remove();
+      }
     }, 800);
   });
 }
 
-// Initialize cosmic effects
+// Smooth scroll initialization
+function initSmoothEffects() {
+  // Add smooth scrolling to all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+}
+
+// Optimized initialization
 document.addEventListener('DOMContentLoaded', function() {
-  createStars();
-  createRippleEffect();
+  requestAnimationFrame(() => {
+    createStars();
+    createRippleEffect();
+    initSmoothEffects();
+  });
   
-  // Add CSS animation for ripples
+  // Add CSS animations
   const style = document.createElement('style');
   style.textContent = `
     @keyframes ripple-animation {
