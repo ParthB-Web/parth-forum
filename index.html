@@ -27,9 +27,9 @@
     }
 
     h1 {
-  font-size: 80px;
+  font-size: 85px;
   margin-bottom: 10px;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.8px;
   text-align: left;
   width: 100%;
   max-width: 800px;
@@ -58,7 +58,7 @@
       margin-bottom: 40px;
       opacity: 0.7;
       font-weight: normal;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       width: 100%;
       max-width: 800px;
     }
@@ -206,6 +206,194 @@
       star.style.animationDuration = `${Math.random() * 4 + 2}s`;
       starsContainer.appendChild(star);
     }
+    // Cosmic Audio System
+class CosmicAudio {
+  constructor() {
+    this.audioContext = null;
+    this.masterGain = null;
+    this.isPlaying = false;
+    this.oscillators = [];
+    this.noiseNode = null;
+  }
+
+  async init() {
+    try {
+      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      this.masterGain = this.audioContext.createGain();
+      this.masterGain.connect(this.audioContext.destination);
+      this.masterGain.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+      return true;
+    } catch (error) {
+      console.log('Audio not supported');
+      return false;
+    }
+  }
+
+  // Create cosmic drone sounds
+  createCosmicDrone(frequency, gain = 0.05) {
+    const oscillator = this.audioContext.createOscillator();
+    const gainNode = this.audioContext.createGain();
+    const filter = this.audioContext.createBiquadFilter();
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+    
+    // Add subtle frequency modulation for organic feel
+    const lfo = this.audioContext.createOscillator();
+    const lfoGain = this.audioContext.createGain();
+    lfo.frequency.setValueAtTime(0.1, this.audioContext.currentTime);
+    lfoGain.gain.setValueAtTime(2, this.audioContext.currentTime);
+    
+    lfo.connect(lfoGain);
+    lfoGain.connect(oscillator.frequency);
+    
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(800, this.audioContext.currentTime);
+    filter.Q.setValueAtTime(1, this.audioContext.currentTime);
+    
+    gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime + 3);
+    
+    oscillator.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(this.masterGain);
+    
+    oscillator.start();
+    lfo.start();
+    
+    this.oscillators.push({ osc: oscillator, lfo: lfo, gain: gainNode });
+    return { oscillator, gainNode, filter };
+  }
+
+  // Create space wind/noise
+  createCosmicWind() {
+    const bufferSize = this.audioContext.sampleRate * 2;
+    const noiseBuffer = this.audioContext.createBuffer(1, bufferSize, this.audioContext.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    
+    // Generate pink noise
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = (Math.random() * 2 - 1) * 0.1;
+    }
+    
+    const whiteNoise = this.audioContext.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+    
+    const windGain = this.audioContext.createGain();
+    const windFilter = this.audioContext.createBiquadFilter();
+    
+    windFilter.type = 'bandpass';
+    windFilter.frequency.setValueAtTime(200, this.audioContext.currentTime);
+    windFilter.Q.setValueAtTime(0.5, this.audioContext.currentTime);
+    
+    windGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+    windGain.gain.linearRampToValueAtTime(0.02, this.audioContext.currentTime + 4);
+    
+    whiteNoise.connect(windFilter);
+    windFilter.connect(windGain);
+    windGain.connect(this.masterGain);
+    
+    whiteNoise.start();
+    this.noiseNode = whiteNoise;
+  }
+
+  async startCosmicAmbience() {
+    if (this.isPlaying) return;
+    
+    const initialized = await this.init();
+    if (!initialized) return;
+    
+    this.isPlaying = true;
+    
+    // Create multiple harmonic drones
+    this.createCosmicDrone(55, 0.04);    // Deep bass
+    this.createCosmicDrone(110, 0.03);   // Low harmonic
+    this.createCosmicDrone(165, 0.025);  // Mid harmonic
+    this.createCosmicDrone(220, 0.02);   // Higher harmonic
+    
+    // Add cosmic wind
+    this.createCosmicWind();
+    
+    // Add occasional sparkle tones
+    this.createSparkles();
+  }
+
+  createSparkles() {
+    const playSparkle = () => {
+      if (!this.isPlaying) return;
+      
+      const frequencies = [440, 554, 659, 880, 1108];
+      const freq = frequencies[Math.floor(Math.random() * frequencies.length)];
+      
+      const sparkle = this.audioContext.createOscillator();
+      const sparkleGain = this.audioContext.createGain();
+      const sparkleFilter = this.audioContext.createBiquadFilter();
+      
+      sparkle.type = 'sine';
+      sparkle.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+      
+      sparkleFilter.type = 'highpass';
+      sparkleFilter.frequency.setValueAtTime(400, this.audioContext.currentTime);
+      
+      sparkleGain.gain.setValueAtTime(0, this.audioContext.currentTime);
+      sparkleGain.gain.linearRampToValueAtTime(0.015, this.audioContext.currentTime + 0.1);
+      sparkleGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 2);
+      
+      sparkle.connect(sparkleFilter);
+      sparkleFilter.connect(sparkleGain);
+      sparkleGain.connect(this.masterGain);
+      
+      sparkle.start();
+      sparkle.stop(this.audioContext.currentTime + 2);
+      
+      // Random interval for next sparkle (8-25 seconds)
+      setTimeout(playSparkle, (Math.random() * 17 + 8) * 1000);
+    };
+    
+    // Start first sparkle after random delay
+    setTimeout(playSparkle, (Math.random() * 10 + 3) * 1000);
+  }
+
+  stop() {
+    if (!this.isPlaying) return;
+    
+    this.isPlaying = false;
+    this.oscillators.forEach(({ osc, lfo, gain }) => {
+      gain.gain.linearRampToValueAtTime(0, this.audioContext.currentTime + 2);
+      osc.stop(this.audioContext.currentTime + 2);
+      lfo.stop(this.audioContext.currentTime + 2);
+    });
+    
+    if (this.noiseNode) {
+      this.noiseNode.stop(this.audioContext.currentTime + 2);
+    }
+    
+    this.oscillators = [];
+  }
+}
+
+// Initialize cosmic audio
+const cosmicAudio = new CosmicAudio();
+
+// Auto-start after page load (with user interaction)
+document.addEventListener('click', () => {
+  if (!cosmicAudio.isPlaying) {
+    cosmicAudio.startCosmicAmbience();
+  }
+}, { once: true });
+
+// Optional: Add a toggle button
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (cosmicAudio.isPlaying) {
+      cosmicAudio.stop();
+    } else {
+      cosmicAudio.startCosmicAmbience();
+    }
+  }
+});
   </script>
 </body>
 </html>
