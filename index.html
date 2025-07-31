@@ -69,36 +69,30 @@
     }
 
     .nav-section a {
-      text-decoration: none;
-      color: #f2f2f2;
-      position: relative;
-      padding-left: 28px;
-      display: inline-block;
-      font-size: 40px;
-      transition: all 0.3s ease;
-    }
+  text-decoration: none;
+  color: #f2f2f2;
+  position: relative;
+  padding-left: 40px;  /* Increased from 28px to 40px */
+  display: inline-block;
+  font-size: 40px;
+  transition: all 0.3s ease;
+}
 
-    .nav-section a::before {
-      content: "→	";
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      color: #999;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
+.nav-section a::before {
+  content: "→";
+  position: absolute;
+  left: -5px;  /* Move arrow slightly left */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #999;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
 
-    .nav-section a:hover::before {
-      transform: translateX(6px) translateY(-50%);
-      color: #fff;
-    }
-
-    .nav-section a:hover {
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-
+.nav-section a:hover::before {
+  transform: translateX(6px) translateY(-50%);
+  color: #fff;
+}
     #stars {
       position: fixed;
       width: 100%;
