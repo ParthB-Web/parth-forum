@@ -113,12 +113,13 @@ a:hover::before {
     }
 
     a::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #999;
-      transition: transform 0.3s ease, color 0.3s ease;
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  transition: transform 0.3s ease, color 0.3s ease;
     }
 
     a:hover::before {
