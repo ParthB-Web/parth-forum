@@ -4,13 +4,18 @@
   --cosmic-light: #f2f2f2;
   --cosmic-accent: #8a6d3b;
   --cosmic-gold: #c0a57b;
-  --transition: all 0.3s ease;
+  --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --smooth-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -21,9 +26,11 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cosmic Stars Background */
+/* Enhanced Stars Background */
 #stars {
   position: fixed;
   width: 100%;
@@ -32,6 +39,7 @@ body {
   overflow: hidden;
   top: 0;
   left: 0;
+  will-change: opacity;
 }
 
 .star {
@@ -40,6 +48,7 @@ body {
   border-radius: 50%;
   opacity: 0.1;
   animation: twinkle 3s infinite;
+  will-change: opacity;
 }
 
 @keyframes twinkle {
@@ -47,7 +56,7 @@ body {
   50% { opacity: 0.8; }
 }
 
-/* Navigation */
+/* Smooth Navigation */
 .nav-home {
   position: fixed;
   top: 20px;
@@ -58,7 +67,8 @@ body {
   border-radius: 50px;
   padding: 10px 20px;
   backdrop-filter: blur(10px);
-  transition: var(--transition);
+  transition: var(--smooth-transition);
+  will-change: transform, background;
 }
 
 .nav-home:hover {
@@ -74,7 +84,7 @@ body {
   letter-spacing: 1px;
 }
 
-/* Stellar Glow Animation */
+/* Enhanced Stellar Glow */
 @keyframes stellarGlow {
   0%, 100% { 
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -84,6 +94,15 @@ body {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
     opacity: 1;
   }
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
 }
 
 /* Page Headers */
@@ -99,9 +118,17 @@ body {
   margin-bottom: 1rem;
   letter-spacing: 2px;
   animation: stellarGlow 4s infinite ease-in-out;
+  will-change: opacity, text-shadow;
 }
 
-/* Content Cards */
+.page-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Enhanced Content Cards */
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -115,14 +142,30 @@ body {
   border-radius: 12px;
   backdrop-filter: blur(15px);
   padding: 2.5rem;
-  transition: var(--transition);
+  transition: var(--smooth-transition);
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  will-change: transform, box-shadow, border-color;
+}
+
+.content-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  transition: left 0.8s ease;
+}
+
+.content-card:hover::before {
+  left: 100%;
 }
 
 .content-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(1.02);
   border-color: var(--cosmic-gold);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
@@ -131,6 +174,28 @@ body {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: var(--cosmic-gold);
+  transition: var(--transition);
+}
+
+.content-card:hover h3 {
+  color: #d4b886;
+}
+
+.content-card p {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  transition: var(--transition);
+}
+
+.content-card:hover p {
+  color: rgba(255,255,255,0.9);
+}
+
+.content-card small {
+  color: rgba(255,255,255,0.5);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
 }
 
 .content-card a {
@@ -138,7 +203,24 @@ body {
   text-decoration: none;
 }
 
-/* Responsive */
+/* Enhanced Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--cosmic-gold), transparent);
+  transform: scale(0);
+  animation: ripple-animation 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .content-grid {
     grid-template-columns: 1fr;
@@ -146,4 +228,10 @@ body {
   .page-title {
     font-size: 2.5rem;
   }
+}
+
+/* Performance Optimizations */
+.star, .content-card, .nav-home {
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
