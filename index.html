@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Parth's Forum</title>
+  <title>Cosmic Coffee Stains</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
   <style>
     * {
@@ -28,9 +28,19 @@
 
     h1 {
       font-size: 100px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       letter-spacing: 1.5px;
       text-align: left;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .author {
+      font-size: 35px;
+      margin-bottom: 40px;
+      opacity: 0.7;
+      font-weight: normal;
+      letter-spacing: 0.5px;
       width: 100%;
       max-width: 800px;
     }
@@ -69,36 +79,38 @@
     }
 
     .nav-section a {
-  text-decoration: none;
-  color: #f2f2f2;
-  position: relative;
-  padding-left: 40px;  /* Increased from 28px to 40px */
-  display: inline-block;
-  font-size: 40px;
-  transition: all 0.3s ease;
-}
-.nav-section a::before {
-  content: "→";
-  position: absolute;
-  left: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 40px;
-  color: #999;
-  transition: transform 0.3s ease, color 0.3s ease;
-  animation: gentlePulse 2.5s infinite ease-in-out;
-}
+      text-decoration: none;
+      color: #f2f2f2;
+      position: relative;
+      padding-left: 40px;
+      display: inline-block;
+      font-size: 40px;
+      transition: all 0.3s ease;
+    }
 
-@keyframes gentlePulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.9; }
-}
+    .nav-section a::before {
+      content: "→";
+      position: absolute;
+      left: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: #999;
+      transition: transform 0.3s ease, color 0.3s ease;
+      animation: gentlePulse 2.5s infinite ease-in-out;
+    }
 
-.nav-section a:hover::before {
-  transform: translateX(6px) translateY(-50%);
-  color: #fff;
-  animation: none; /* Stop pulse on hover */
-}
+    @keyframes gentlePulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.9; }
+    }
+
+    .nav-section a:hover::before {
+      transform: translateX(6px) translateY(-50%);
+      color: #fff;
+      animation: none;
+    }
+
     #stars {
       position: fixed;
       width: 100%;
@@ -126,6 +138,9 @@
       h1 {
         font-size: 42px;
       }
+      .author {
+        font-size: 20px;
+      }
       p {
         font-size: 18px;
       }
@@ -141,7 +156,9 @@
 <body>
   <div id="stars"></div>
 
-  <h1>Parth's Forum</h1>
+  <h1>Cosmic Coffee Stains</h1>
+  <div class="author">Parth B.</div>
+  
   <p>
     A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia.
     These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document
@@ -152,8 +169,8 @@
   <div class="nav-section">
     <h2>Explore:</h2>
     <ul>
-      <li><a href="poetry/index.html">	Poetry</a></li>
-      <li><a href="writings/index.html">	Writings</a></li>
+      <li><a href="poetry/index.html">Poetry</a></li>
+      <li><a href="writings/index.html">Writings</a></li>
     </ul>
   </div>
 
