@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parth's Forum</title>
+</head>
+<body>
+  <h1>Parth's Forum</h1>
+  <ul>
+    <li><a href="poetry/index.html">Poetry</a></li>
+    <li><a href="writings/index.html">Writings</a></li>
+  </ul>
+</body>
+</html>
