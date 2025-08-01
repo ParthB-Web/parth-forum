@@ -22,16 +22,19 @@
       margin-top: 1.5rem;
       font-family: 'Montserrat', sans-serif;
     }
-     /* This ensures the top nav button won't overlap the title */
+    
+    /* This ensures the top nav button won't overlap the title */
     .container {
       padding-top: 80px;
     }
+    
     @media (max-width: 600px) {
       .container {
         padding-top: 90px;  /* extra space for mobile nav tap area */
       }
+    }
     
-    /* Improve poem readability */
+    /* Base poem content styles - mobile optimized */
     .poem-content {
       font-size: 1.1rem;
       line-height: 1.75;
@@ -58,7 +61,33 @@
       opacity: 0.6;
     }
     
-    /* Mobile optimization */
+    /* Desktop styles - maintain mobile spacing but increase readability */
+    @media (min-width: 769px) {
+      .poem-content {
+        font-size: 1.35rem !important;
+        line-height: 1.8 !important;
+        max-width: 750px;
+        margin: 4rem auto !important;
+      }
+      
+      .poem-content p {
+        margin-bottom: 2.2rem !important;
+      }
+      
+      .poem-content em {
+        font-size: 1.35rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.8;
+      }
+      
+      .poem-break {
+        margin: 4rem 0;
+        font-size: 1.8rem;
+        opacity: 0.7;
+      }
+    }
+    
+    /* Mobile specific adjustments */
     @media (max-width: 768px) {
       .content-meta h1 {
         margin-bottom: 0.8rem;
@@ -73,6 +102,10 @@
         font-size: 1rem;
         line-height: 1.7;
         padding: 0 1rem;
+      }
+      
+      .poem-content p {
+        margin-bottom: 1.8rem;
       }
     }
   </style>
