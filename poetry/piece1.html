@@ -22,6 +22,14 @@
       margin-top: 1.5rem;
       font-family: 'Montserrat', sans-serif;
     }
+     /* This ensures the top nav button won't overlap the title */
+    .container {
+      padding-top: 80px;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding-top: 90px;  /* extra space for mobile nav tap area */
+      }
     
     /* Improve poem readability */
     .poem-content {
