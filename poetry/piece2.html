@@ -22,16 +22,19 @@
       margin-top: 1.5rem;
       font-family: 'Montserrat', sans-serif;
     }
-     /* This ensures the top nav button won't overlap the title */
+    
+    /* This ensures the top nav button won't overlap the title */
     .container {
       padding-top: 80px;
     }
+    
     @media (max-width: 600px) {
       .container {
         padding-top: 90px;  /* extra space for mobile nav tap area */
       }
+    }
     
-    /* Improve poem readability */
+    /* Base poem content styles - mobile optimized */
     .poem-content {
       font-size: 1.1rem;
       line-height: 1.75;
@@ -42,7 +45,11 @@
     }
     
     .poem-content p {
-      margin-bottom: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    
+    .poem-content p.short-verse {
+      margin-bottom: 2.5rem;
     }
     
     .poem-content em {
@@ -52,7 +59,7 @@
     /* Section breaks */
     .poem-break {
       text-align: center;
-      margin: 3rem 0;
+      margin: 4rem 0;
       color: var(--cosmic-gold);
       font-size: 1.5rem;
       opacity: 0.6;
@@ -68,7 +75,11 @@
       }
       
       .poem-content p {
-        margin-bottom: 2.2rem !important;
+        margin-bottom: 2.4rem !important;
+      }
+      
+      .poem-content p.short-verse {
+        margin-bottom: 3rem !important;
       }
       
       .poem-content em {
@@ -78,7 +89,7 @@
       }
       
       .poem-break {
-        margin: 4rem 0;
+        margin: 5rem 0;
         font-size: 1.8rem;
         opacity: 0.7;
       }
@@ -104,6 +115,10 @@
       .poem-content p {
         margin-bottom: 1.8rem;
       }
+      
+      .poem-content p.short-verse {
+        margin-bottom: 2.2rem;
+      }
     }
   </style>
 </head>
@@ -124,10 +139,12 @@
       <div class="poem-content">
         <p><em>Wandering around, wondering—<br>
         If no one can act outside what shaped them,<br>
-        then who do we blame?<br>
-        What is cruelty<br>
-        when intention dissolves into origin?<br>
-        A fist raised isn't born in the wrist—<br>
+        then who do we blame?</em></p>
+
+        <p><em>What is cruelty<br>
+        when intention dissolves into origin?</em></p>
+
+        <p><em>A fist raised isn't born in the wrist—<br>
         it travels,<br>
         from a father's silence,<br>
         a society's hunger,<br>
@@ -135,7 +152,7 @@
         threaded into one explosive need<br>
         to be felt.</em></p>
 
-        <p><em>Even the cruelest man<br>
+        <p class="short-verse"><em>Even the cruelest man<br>
         was once just trying<br>
         to feel safe.</em></p>
 
@@ -148,14 +165,15 @@
         <p><em>They say she left<br>
         because I wasn't enough.<br>
         But did she choose that?<br>
-        Did she know her reasons?<br>
-        Did I know mine<br>
+        Did she know her reasons?</em></p>
+
+        <p><em>Did I know mine<br>
         when I withdrew,<br>
         when I stilled,<br>
         when I became smaller<br>
         than the man she wanted?</em></p>
 
-        <p><em>It was never a choice.<br>
+        <p class="short-verse"><em>It was never a choice.<br>
         It was a momentum.<br>
         A wave neither of us saw until it broke.</em></p>
 
@@ -164,8 +182,9 @@
         <p><em>Wandering around, wondering—<br>
         How do you cry in front of your parents<br>
         and still feel like a fracture<br>
-        in their dream of a son?<br>
-        They say the words—<br>
+        in their dream of a son?</em></p>
+
+        <p><em>They say the words—<br>
         love, pride—<br>
         but you hear the space between them,<br>
         the part where you didn't become<br>
@@ -177,10 +196,10 @@
         They too inherited the script.<br>
         So who am I to be angry?</em></p>
 
-        <p><em>And yet—<br>
+        <p class="short-verse"><em>And yet—<br>
         anger comes.</em></p>
 
-        <p><em>So what can anyone be,<br>
+        <p class="short-verse"><em>So what can anyone be,<br>
         but a consequence?</em></p>
 
         <div class="poem-break">⋆ ⋅ ☾ ⋅ ⋆</div>
@@ -204,18 +223,19 @@
         trying to receive the love,<br>
         while your mind dissects the source.</em></p>
 
-        <p><em>What is love,<br>
+        <p class="short-verse"><em>What is love,<br>
         if it's just coping that fits for a while?</em></p>
 
-        <p><em>What is loyalty,<br>
+        <p class="short-verse"><em>What is loyalty,<br>
         if it ends the moment their fear shifts shape?</em></p>
 
         <p><em>Even the ones who ghost you,<br>
         who confuse you,<br>
         who don't call back—<br>
         you see it:<br>
-        it was never personal.<br>
-        It was their wiring,<br>
+        it was never personal.</em></p>
+
+        <p><em>It was their wiring,<br>
         their conditioning,<br>
         their unfinished stories speaking louder than they could.</em></p>
 
@@ -225,7 +245,7 @@
         your craving for distance—<br>
         it's not a choice either.</em></p>
 
-        <p><em>It's the cost of seeing too much.</em></p>
+        <p class="short-verse"><em>It's the cost of seeing too much.</em></p>
 
         <div class="poem-break">⋆ ⋅ ☾ ⋅ ⋆</div>
 
@@ -241,8 +261,9 @@
         <p><em>So now,<br>
         you move through life<br>
         like a ghost with skin—<br>
-        present, but not quite here.<br>
-        Because once you see<br>
+        present, but not quite here.</em></p>
+
+        <p><em>Because once you see<br>
         what moves people,<br>
         you stop believing in what they say.<br>
         Not because they're false—<br>
@@ -257,7 +278,7 @@
         that no one's home<br>
         behind their own eyes.</em></p>
 
-        <p><em>And maybe<br>
+        <p class="short-verse"><em>And maybe<br>
         neither are you.</em></p>
       </div>
     </div>
