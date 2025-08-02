@@ -1,7 +1,3 @@
-const supabase = supabase.createClient(
-  'https://juhunqkuaqzwuihktwqw.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1aHVucWt1YXF6d3VpaGt0d3F3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxMjU3MDIsImV4cCI6MjA2OTcwMTcwMn0.NLIayZ_5JTFhAdO6hjIcP7PFjFq7m7EdXAEJLVs3CnM'
-);
 // Performance optimized JavaScript
 let isStarsCreated = false;
 let particleCount = 0;
