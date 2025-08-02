@@ -1,93 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cosmic Coffee Stains | Parth B.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Cosmic Support Element Styles -->
+  <style>
+    .cosmic-support {
+      width: 100%;
+      max-width: 500px; /* Same as your other cards */
+      margin: 3rem auto;
+      padding: 3rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(15px);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+    }
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  />
+    .cosmic-support::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transition: left 0.8s ease;
+    }
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+    .cosmic-support:hover::before {
+      left: 100%;
+    }
 
-  <!-- Supabase JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    .cosmic-support:hover {
+      transform: translateY(-10px);
+      border-color: var(--cosmic-gold);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .support-title {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--cosmic-light);
+      position: relative;
+      text-align: center;
+    }
+
+    .support-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 1px;
+      background: var(--cosmic-gold);
+      opacity: 0.6;
+    }
+
+    .cosmic-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .cosmic-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: var(--cosmic-light);
+      text-decoration: none;
+      border: 2px solid var(--cosmic-gold);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      font-size: 1rem;
+    }
+
+    .cosmic-btn::before {
+      content: '→';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--cosmic-gold);
+      transition: all 0.3s ease;
+      animation: arrowPulse 2s infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .cosmic-btn:hover::before {
+      left: 15px;
+      animation: none;
+    }
+
+    .cosmic-btn:hover {
+      background: var(--cosmic-gold);
+      color: var(--cosmic-dark);
+      transform: translateY(-3px);
+      padding-left: 3.5rem;
+    }
+
+    .cosmic-icon {
+      margin-right: 8px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .cosmic-btn:hover .cosmic-icon {
+      transform: scale(1.1);
+    }
+
+    /* Stellar pulse animation */
+    .stellar-pulse:hover .cosmic-icon {
+      animation: stellarPulse 0.6s ease;
+    }
+
+    @keyframes stellarPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2) rotate(5deg); }
+    }
+
+    /* Cosmic glow animation */
+    .cosmic-glow:hover .cosmic-icon {
+      animation: cosmicGlow 0.6s ease;
+    }
+
+    @keyframes cosmicGlow {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(192, 165, 123, 0.6)); }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .cosmic-support {
+        padding: 2rem;
+      }
+      
+      .support-title {
+        font-size: 1.8rem;
+      }
+      
+      .cosmic-btn {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Starry Background -->
   <div id="stars"></div>
+  
+  <!-- Cosmic Orbs -->
   <div class="cosmic-orb orb-1"></div>
   <div class="cosmic-orb orb-2"></div>
-
+  
   <div class="container">
     <header>
-      <div class="header-content">
-        <h1 class="fade-in">Cosmic Coffee Stains</h1>
-        <div class="author fade-in">Parth B.</div>
+      <div class="header-content fade-in">
+        <h1>Cosmic Coffee Stains</h1>
+        <div class="author">Parth B.</div>
       </div>
-
-      <!-- Cosmic Authentication UI: placed inside header for visual harmony -->
-      <div id="cosmic-auth-portal" class="cosmic-auth-small"></div>
     </header>
-
+    
     <section class="intro fade-in delay-1">
-      A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia. These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document the process of becoming ungovernable by illusion.
-      Each piece is a fragment of deeper inquiry: into love, pain, truth, reality and the architecture of meaning.
+      A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia. These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document the process of becoming ungovernable by illusion. Each piece is a fragment of deeper inquiry: into love, pain, truth, reality and the architecture of meaning.
     </section>
-
+    
     <div class="nav-section">
       <div class="nav-card fade-in delay-2">
         <h2>Poetry</h2>
         <p>Collections of verse that explore the human condition through metaphor, rhythm, and raw emotion. Each poem is a journey into the depths of consciousness.</p>
         <a href="poetry/index.html" class="nav-link">Explore Poetry</a>
       </div>
-
+      
       <div class="nav-card fade-in delay-3">
         <h2>Writings</h2>
         <p>Essays and meditations that confront reality head-on. These pieces dissect society, self, and meaning without anesthesia or pretense.</p>
         <a href="writings/index.html" class="nav-link">Explore Writings</a>
       </div>
     </div>
-
-    <!-- Support Card -->
-    <div class="cosmic-support fade-in">
-      <h2 class="support-title">Connect & Support</h2>
+    
+    <!-- Support Element - Wide Card with Two Rows -->
+    <div class="cosmic-support">
+      <h2 class="support-title">Connect Across the Cosmos</h2>
       <div class="cosmic-buttons">
-        <a
-          href="mailto:partha995417@gmail.com?subject=Greetings%20from%20the%20Cosmic%20Void&body=Hello%20Parth,"
-          class="cosmic-btn stellar-pulse"
-          title="Send a message across the void"
-          target="_blank" rel="noopener noreferrer"
-        >
+        <a href="mailto:your-email@example.com?subject=Greetings%20from%20the%20Cosmic%20Void&body=Hello%20Parth,%0A%0AI%20discovered%20your%20cosmic%20coffee%20stains%20and%20felt%20compelled%20to%20reach%20across%20the%20void..." 
+           class="cosmic-btn stellar-pulse" 
+           title="Send a message across the cosmic void">
           <span class="cosmic-icon">🌌</span>
           Whisper to the Void
         </a>
-        <a
-          href="https://your-payment-link.com"
-          class="cosmic-btn cosmic-glow"
-          title="Support cosmic writings"
-          target="_blank" rel="noopener noreferrer"
-        >
+        
+        <a href="https://your-payment-link.com" 
+           class="cosmic-btn cosmic-glow" 
+           target="_blank" 
+           title="Support the cosmic journey">
           <span class="cosmic-icon">✨</span>
           Fuel the Stardust
         </a>
       </div>
     </div>
-
+    
     <footer class="fade-in">
       © 2025 Cosmic Coffee Stains | An Archive of Raw Clarity
     </footer>
   </div>
 
-  <!-- JavaScript files -->
   <script src="js/cosmic.js"></script>
-  <script src="js/supabase-config.js"></script>
-  <script src="js/cosmic-auth.js"></script>
 </body>
 </html>
