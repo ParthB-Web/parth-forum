@@ -1,0 +1,256 @@
+/* --- Cosmic Authentication UI (Small Compact UI) --- */
+.cosmic-auth-small {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.2rem 0 0 0;
+  user-select: none;
+}
+
+.cosmic-auth-small .cosmic-auth-row {
+  display: flex;
+  align-items: center;
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid var(--cosmic-gold);
+  border-radius: 18px;
+  padding: 6px 13px;
+  gap: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.97rem;
+  box-shadow: 0 2px 12px rgba(192, 165, 123, 0.08);
+  min-height: 38px;
+}
+
+.cosmic-auth-small .cosmic-auth-row > * {
+  user-select: none;
+}
+
+.cosmic-auth-small .cosmic-auth-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--cosmic-gold);
+  background: rgba(192, 165, 123, 0.06);
+}
+
+.cosmic-auth-small .cosmic-auth-icon {
+  font-size: 1.08rem;
+  margin-right: 3px;
+  display: inline-block;
+}
+
+.cosmic-auth-small .cosmic-auth-row .cosmic-auth-avatar-placeholder {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(192, 165, 123, 0.06);
+  border: 1px solid var(--cosmic-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--cosmic-gold);
+  user-select: none;
+}
+
+.cosmic-auth-small .cosmic-auth-row .cosmic-authentication-col {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.cosmic-auth-small .cosmic-authentication-col .cosmic-auth-greeting {
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 500;
+  font-size: 0.995rem;
+  user-select: none;
+}
+
+.cosmic-auth-small button.cosmic-authentication-btn,
+.cosmic-auth-small button.cosmic-auth-row button {
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--cosmic-gold);
+  background: transparent;
+  border: 1px solid var(--cosmic-gold);
+  border-radius: 14px;
+  padding: 2px 8px;
+  font-weight: 400;
+  font-size: 0.89rem;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.cosmic-auth-small button.cosmic-authentication-btn:hover,
+.cosmic-auth-small button.cosmic-auth-row button:hover {
+  background: var(--cosmic-gold);
+  color: var(--cosmic-dark);
+  box-shadow: 0 0 15px rgba(192, 165, 123, 0.6);
+  transform: scale(1.05);
+}
+
+.cosmic-auth-small button.cosmic-authentication-btn > .cosmic-btn-icon {
+  font-size: 1rem;
+  margin-left: 5px;
+  user-select: none;
+  display: inline-block;
+}
+
+/* --- Cosmic Support Card Styling --- */
+.cosmic-support {
+  width: 100%;
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.25);
+  position: relative;
+  user-select: none;
+}
+
+.cosmic-support::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.8s ease;
+}
+
+.cosmic-support:hover::before {
+  left: 100%;
+}
+
+.cosmic-support:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: var(--cosmic-gold);
+  transform: translateY(-10px);
+}
+
+.support-title {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 2.2rem;
+  color: var(--cosmic-light);
+  margin-bottom: 1.5rem;
+  position: relative;
+  text-align: center;
+  user-select: none;
+}
+
+.support-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 2px;
+  background: var(--cosmic-gold);
+  opacity: 0.6;
+  transform: translateX(-50%);
+}
+
+.cosmic-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cosmic-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  padding: 1rem 2.5rem;
+  border: 2px solid var(--cosmic-gold);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--cosmic-light);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
+}
+
+.cosmic-btn .cosmic-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.cosmic-btn::before {
+  content: "→";
+  color: var(--cosmic-gold);
+  font-size: 1.2rem;
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.3s ease;
+  animation: arrowPulse 2s infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.cosmic-btn:hover {
+  background: var(--cosmic-gold);
+  color: var(--cosmic-dark);
+  padding-left: 3.5rem;
+  transform: translateY(-3px);
+}
+
+.cosmic-btn:hover::before {
+  left: 15px;
+  animation: none;
+}
+
+.cosmic-btn:hover .cosmic-icon {
+  transform: scale(1.1);
+}
+
+@keyframes stellarPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(5deg); }
+}
+
+.stellar-pulse:hover .cosmic-icon {
+  animation: stellarPulse 0.6s ease;
+}
+
+@keyframes cosmicGlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 10px var(--cosmic-gold)); }
+}
+
+.cosmic-glow:hover .cosmic-icon {
+  animation: cosmicGlow 0.6s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cosmic-auth-small { justify-content: center; margin-bottom: 0.5rem; }
+  .cosmic-auth-row { font-size: 0.91rem; padding: 5px 10px; }
+  .cosmic-authentication-btn, .cosmic-auth-row button { font-size: 0.88rem; padding: 5px 11px; }
+  .cosmic-support { padding: 2rem; }
+  .support-title { font-size: 1.8rem; }
+  .cosmic-btn { padding: 0.8rem 2rem; font-size: 0.9rem; }
+}
