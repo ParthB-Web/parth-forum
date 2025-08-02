@@ -1,21 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cosmic Coffee Stains | Parth B.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
   
-  <!-- Supabase SDK -->
+  <!-- Supabase JavaScript SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Cosmic Support and Authentication Styles -->
+  <style>
+    /* Cosmic Authentication Portal */
+    .cosmic-auth-portal {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      z-index: 1000;
+      font-family: 'EB Garamond', serif;
+      user-select: none;
+    }
+    .cosmic-signin-btn {
+      background: rgba(26, 26, 26, 0.95);
+      border: 2px solid var(--cosmic-gold);
+      border-radius: 25px;
+      padding: 12px 24px;
+      color: var(--cosmic-gold);
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(192, 165, 123, 0.3);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .cosmic-signin-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(192, 165, 123, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    .cosmic-signin-btn:hover::before {
+      left: 100%;
+    }
+    .cosmic-signin-btn:hover {
+      background: rgba(192, 165, 123, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(192, 165, 123, 0.5);
+      text-shadow: 0 0 10px var(--cosmic-gold);
+    }
+    .cosmic-btn-icon {
+      font-size: 1.3rem;
+      filter: drop-shadow(0 0 8px var(--cosmic-gold));
+      transition: all 0.3s ease;
+    }
+    .cosmic-signin-btn:hover .cosmic-btn-icon {
+      transform: scale(1.2) rotate(15deg);
+      filter: drop-shadow(0 0 15px var(--cosmic-gold));
+    }
+    .cosmic-user-display {
+      background: rgba(26, 26, 26, 0.95);
+      border: 2px solid var(--cosmic-gold);
+      border-radius: 25px;
+      padding: 10px 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(192, 165, 123, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.4s ease;
+      user-select: none;
+    }
+    .cosmic-user-display:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(192, 165, 123, 0.4);
+    }
+    .cosmic-user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cosmic-gold);
+    }
+    .cosmic-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--cosmic-gold);
+      box-shadow: 0 0 10px rgba(192, 165, 123, 0.5);
+      object-fit: cover;
+    }
+    .cosmic-avatar-placeholder {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--cosmic-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      background: rgba(192, 165, 123, 0.1);
+      box-shadow: 0 0 10px rgba(192, 165, 123, 0.5);
+    }
+    .cosmic-username {
+      font-size: 1rem;
+      font-weight: 500;
+      text-shadow: 0 0 8px rgba(192, 165, 123, 0.3);
+    }
+    .cosmic-signout-btn {
+      background: transparent;
+      border: 1px solid var(--cosmic-gold);
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: var(--cosmic-gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+    .cosmic-signout-btn:hover {
+      background: var(--cosmic-gold);
+      color: var(--cosmic-dark);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(192, 165, 123, 0.6);
+    }
+    .cosmic-signout-btn .cosmic-btn-icon {
+      font-size: 1rem;
+    }
+    .cosmic-signout-btn:hover .cosmic-btn-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Cosmic Support Element */
+    .cosmic-support {
+      width: 100%;
+      max-width: 500px;
+      margin: 3rem auto;
+      padding: 3rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(15px);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+    }
+    .cosmic-support::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transition: left 0.8s ease;
+    }
+    .cosmic-support:hover::before {
+      left: 100%;
+    }
+    .cosmic-support:hover {
+      transform: translateY(-10px);
+      border-color: var(--cosmic-gold);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .support-title {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--cosmic-light);
+      position: relative;
+      text-align: center;
+    }
+    .support-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 1px;
+      background: var(--cosmic-gold);
+      opacity: 0.6;
+    }
+    .cosmic-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .cosmic-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: var(--cosmic-light);
+      text-decoration: none;
+      border: 2px solid var(--cosmic-gold);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      font-size: 1rem;
+    }
+    .cosmic-btn::before {
+      content: '→';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--cosmic-gold);
+      transition: all 0.3s ease;
+      animation: arrowPulse 2s infinite;
+    }
+    @keyframes arrowPulse {
+      0%,
+      100% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    .cosmic-btn:hover::before {
+      left: 15px;
+      animation: none;
+    }
+    .cosmic-btn:hover {
+      background: var(--cosmic-gold);
+      color: var(--cosmic-dark);
+      transform: translateY(-3px);
+      padding-left: 3.5rem;
+    }
+    .cosmic-icon {
+      margin-right: 8px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .cosmic-btn:hover .cosmic-icon {
+      transform: scale(1.1);
+    }
+    .stellar-pulse:hover .cosmic-icon {
+      animation: stellarPulse 0.6s ease;
+    }
+    @keyframes stellarPulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2) rotate(5deg);
+      }
+    }
+    .cosmic-glow:hover .cosmic-icon {
+      animation: cosmicGlow 0.6s ease;
+    }
+    @keyframes cosmicGlow {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 8px rgba(192, 165, 123, 0.6));
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cosmic-auth-portal {
+        top: 15px;
+        right: 15px;
+      }
+      .cosmic-signin-btn {
+        padding: 10px 18px;
+        font-size: 1rem;
+      }
+      .cosmic-user-display {
+        padding: 8px 15px;
+      }
+      .cosmic-username {
+        font-size: 0.9rem;
+      }
+      .cosmic-signout-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+      .cosmic-support {
+        padding: 2rem;
+      }
+      .support-title {
+        font-size: 1.8rem;
+      }
+      .cosmic-btn {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Starry Background -->
   <div id="stars"></div>
-  
   <!-- Cosmic Orbs -->
   <div class="cosmic-orb orb-1"></div>
   <div class="cosmic-orb orb-2"></div>
@@ -27,54 +336,154 @@
         <div class="author">Parth B.</div>
       </div>
     </header>
-    
+  
     <section class="intro fade-in delay-1">
       A growing archive of raw clarity— poems, essays, and meditations that dissect the human condition without anesthesia. These works are not crafted for comfort or applause. They are written to confront — self, mind, society — and to document the process of becoming ungovernable by illusion. Each piece is a fragment of deeper inquiry: into love, pain, truth, reality and the architecture of meaning.
     </section>
-    
+  
     <div class="nav-section">
       <div class="nav-card fade-in delay-2">
         <h2>Poetry</h2>
         <p>Collections of verse that explore the human condition through metaphor, rhythm, and raw emotion. Each poem is a journey into the depths of consciousness.</p>
         <a href="poetry/index.html" class="nav-link">Explore Poetry</a>
       </div>
-      
+  
       <div class="nav-card fade-in delay-3">
         <h2>Writings</h2>
         <p>Essays and meditations that confront reality head-on. These pieces dissect society, self, and meaning without anesthesia or pretense.</p>
         <a href="writings/index.html" class="nav-link">Explore Writings</a>
       </div>
     </div>
-    
+  
     <!-- Support Element - Wide Card with Two Rows -->
     <div class="cosmic-support">
       <h2 class="support-title">Connect Across the Cosmos</h2>
       <div class="cosmic-buttons">
-        <a href="mailto:partha995417@gmail.com?subject=Greetings%20from%20the%20Cosmic%20Void&body=Hello%20Parth,%0A%0AI%20discovered%20your%20cosmic%20coffee%20stains%20and%20felt%20compelled%20to%20reach%20across%20the%20void..." 
-           class="cosmic-btn stellar-pulse" 
-           title="Send a message across the cosmic void">
+        <a
+          href="mailto:partha995417@gmail.com?subject=Greetings%20from%20the%20Cosmic%20Void&body=Hello%20Parth,%0A%0AI%20discovered%20your%20cosmic%20coffee%20stains%20and%20felt%20compelled%20to%20reach%20across%20the%20void..."
+          class="cosmic-btn stellar-pulse"
+          title="Send a message across the cosmic void"
+        >
           <span class="cosmic-icon">🌌</span>
           Whisper to the Void
         </a>
-        
-        <a href="https://your-payment-link.com" 
-           class="cosmic-btn cosmic-glow" 
-           target="_blank" 
-           title="Support the cosmic journey">
+        <a
+          href="https://your-payment-link.com"
+          class="cosmic-btn cosmic-glow"
+          target="_blank"
+          title="Support the cosmic journey"
+        >
           <span class="cosmic-icon">✨</span>
           Fuel the Stardust
         </a>
       </div>
     </div>
-    
+  
     <footer class="fade-in">
       © 2025 Cosmic Coffee Stains | An Archive of Raw Clarity
     </footer>
   </div>
 
-  <!-- Scripts in correct order -->
+  <!-- Your existing cosmic JS -->
   <script src="js/cosmic.js"></script>
-  <script src="js/supabase-config.js"></script>
-  <script src="js/cosmic-auth.js"></script>
+  <!-- Supabase config -->
+  <script>
+    // *********** REPLACE supabaseUrl and supabaseKey BELOW WITH YOUR VALUES *************
+    const supabaseUrl = 'https://juhunqkuaqzwuihktwqw.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1aHVucWt1YXF6d3VpaGt0d3F3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxMjU3MDIsImV4cCI6MjA2OTcwMTcwMn0.NLIayZ_5JTFhAdO6hjIcP7PFjFq7m7EdXAEJLVs3CnM';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    window.supabase = supabase;
+
+    async function signInWithGoogle() {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        },
+      });
+      if (error) console.error('Sign In error:', error);
+    }
+
+    async function signOut() {
+      const { error } = await supabase.auth.signOut();
+      if (error) console.error('Sign Out error:', error);
+      else window.location.reload();
+    }
+
+    async function getCurrentUser() {
+      const { data } = await supabase.auth.getUser();
+      return data.user;
+    }
+
+    // Authentication UI handler class
+    class CosmicAuthentication {
+      constructor() {
+        this.user = null;
+        this.authElement = null;
+        this.init();
+      }
+
+      async init() {
+        this.createAuthUI();
+        this.user = await getCurrentUser();
+        this.updateUI();
+
+        supabase.auth.onAuthStateChange((event, session) => {
+          this.user = session?.user || null;
+          this.updateUI();
+        });
+      }
+
+      createAuthUI() {
+        this.authElement = document.createElement('div');
+        this.authElement.className = 'cosmic-auth-portal';
+        document.body.appendChild(this.authElement);
+      }
+
+      updateUI() {
+        if (!this.authElement) return;
+        if (this.user) {
+          const displayName =
+            this.user.user_metadata?.full_name ||
+            this.user.email?.split('@')[0] ||
+            'Cosmic Traveler';
+          const avatar = this.user.user_metadata?.avatar_url;
+
+          this.authElement.innerHTML = `
+            <div class="cosmic-user-display">
+              <div class="cosmic-user-info">
+                ${
+                  avatar
+                    ? `<img src="${avatar}" alt="Avatar" class="cosmic-avatar"/>`
+                    : '<div class="cosmic-avatar-placeholder">👤</div>'
+                }
+                <span class="cosmic-username">Hello, ${displayName}</span>
+              </div>
+              <button class="cosmic-signout-btn" onclick="cosmicAuth.signOut()">
+                <span class="cosmic-btn-icon">🚀</span> Sign Out
+              </button>
+            </div>`;
+        } else {
+          this.authElement.innerHTML = `
+            <button class="cosmic-signin-btn" onclick="cosmicAuth.signIn()">
+              <span class="cosmic-btn-icon">✨</span> Enter the Cosmic Realm
+            </button>`;
+        }
+      }
+
+      async signIn() {
+        await signInWithGoogle();
+      }
+
+      async signOut() {
+        await signOut();
+      }
+    }
+
+    // Initialize auth UI when DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      window.cosmicAuth = new CosmicAuthentication();
+    });
+  </script>
 </body>
 </html>
