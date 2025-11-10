@@ -1,228 +1,927 @@
-/* ============================================================
-   PARTH-FORUM — CONSISTENT, MODERN, TONED-DOWN
-   Purpose: fix cross-page inconsistencies, remove over-cosmic excess,
-   enforce a single component system, preserve character while modernizing.
-   Drop into css/style.css (replace existing file).
-   ============================================================ */
-
-/* ---------- DESIGN SYSTEM (single source of truth) ---------- */
-:root{
-  /* palette */
-  --bg: #0f1113;               /* page background */
-  --surface: #131516;          /* elevated surfaces (cards, nav) */
-  --muted: #bfc6cc;            /* secondary text */
-  --text: #e7eaee;             /* primary text */
-  --accent: #a88f5a;           /* warm accent (desaturated gold) */
-  --accent-weak: rgba(168,143,90,.14);
-  --glass: rgba(255,255,255,.02);
-
-  /* spacing scale */
-  --space-xxs: 6px; --space-xs: 8px; --space-sm: 12px;
-  --space-md: 20px; --space-lg: 32px; --space-xl: 48px;
-
-  /* motion */
-  --ease: cubic-bezier(.25,.9,.3,1);
-  --dur-fast: .18s; --dur-med: .36s; --dur-slow: .8s;
-
-  /* elevation */
-  --shadow-1: 0 6px 18px rgba(2,6,23,.35);
-  --shadow-2: 0 12px 36px rgba(2,6,23,.42);
-
-  /* type */
-  --font-heading: "EB Garamond", serif;
-  --font-ui: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --measure: 66ch;
-  --radius: 12px;
+:root {
+  --cosmic-dark: #0a0a0a;
+  --cosmic-medium: #1a1a1a;
+  --cosmic-light: #f2f2f2;
+  --cosmic-accent: #8a6d3b;
+  --cosmic-gold: #c0a57b;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* ---------- RESET / BASE ---------- */
-*{box-sizing:border-box}
-html,body{height:100%}
-html{font-family:var(--font-ui); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
-body{
-  margin:0;
-  background:linear-gradient(180deg,var(--bg) 0%, #0b0c0d 100%);
-  color:var(--text);
-  line-height:1.6;
-  -webkit-text-size-adjust:100%;
-  text-rendering:optimizeLegibility;
-  font-size:16px;
-  min-height:100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* layout helpers */
-.container{max-width:1100px;margin:0 auto;padding:0 var(--space-lg)}
-.row{display:flex;gap:var(--space-lg);align-items:flex-start;flex-wrap:wrap}
-.col{flex:1 1 0}
-
-/* typography */
-h1,h2,h3,h4{margin:0 0 var(--space-sm) 0;line-height:1.05}
-h1{font-family:var(--font-heading);font-weight:400;font-size:2.4rem;letter-spacing:.6px}
-h2{font-family:var(--font-heading);font-weight:400;font-size:1.4rem}
-p{margin:0 0 var(--space-md) 0;color:var(--muted);max-width:var(--measure)}
-.lead{font-size:1.125rem;color:var(--muted);max-width:var(--measure)}
-
-/* anchor / button primitives */
-a{color:var(--accent);text-decoration:none;transition:color var(--dur-fast) var(--ease)}
-a:hover{color:#d7caa0}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:10px 18px;border-radius:999px;border:1px solid var(--accent-weak);
-  background:transparent;color:var(--text);cursor:pointer;font-family:var(--font-ui);
-  transition:transform var(--dur-fast) var(--ease, var(--dur-fast)), background var(--dur-fast);
-}
-.btn--primary{background:var(--accent);color:var(--bg);border-color:transparent}
-.btn:active{transform:translateY(1px)}
-
-/* ---------- SURFACES / CARD SYSTEM (single card API) ---------- */
-.card{
-  background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02));
-  border:1px solid rgba(255,255,255,.04);
-  border-radius:var(--radius);
-  padding:var(--space-lg);
-  box-shadow:var(--shadow-1);
-  transition:transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med);
-  color:var(--text);
-  overflow:hidden;
+html {
+  scroll-behavior: smooth;
 }
 
-/* consistent card states and modifiers */
-.card--lift{transform:translateY(0)}
-.card:hover{transform:translateY(-8px);box-shadow:var(--shadow-2);border-color:var(--accent-weak)}
-.card--small{padding:var(--space-md)}
-.card--edge{border-radius:8px}
-
-/* semantic modifiers */
-.card--nav{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-.card--content{max-width:820px;margin:0 auto}
-
-/* ensure consistent title/desc inside cards */
-.card h3{font-family:var(--font-heading);font-size:1.05rem;margin-bottom:6px;color:var(--text)}
-.card p{color:var(--muted);margin-bottom:0}
-
-/* ---------- NAV / HEADER / SITE SHELL ---------- */
-.site-header{padding:var(--space-lg) 0;background:transparent}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-md);max-width:1100px;margin:0 auto;padding:0 var(--space-lg)}
-.brand{display:flex;align-items:center;gap:12px}
-.brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent) 0%, #b99f67 100%);box-shadow:var(--shadow-1)}
-.brand h1{font-family:var(--font-heading);font-size:1.1rem;margin:0;color:var(--text)}
-.global-nav{display:flex;gap:14px;align-items:center}
-.global-nav a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600}
-.global-nav a:hover{color:var(--text);background:rgba(255,255,255,.02)}
-
-/* mobile nav simplification */
-@media (max-width:880px){
-  .header-inner{flex-direction:column;align-items:flex-start;padding-bottom:var(--space-md)}
-  .global-nav{width:100%;justify-content:space-between}
+body {
+  font-family: 'EB Garamond', serif;
+  background: radial-gradient(circle at center, var(--cosmic-dark), var(--cosmic-medium));
+  color: var(--cosmic-light);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  /* Performance optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
 }
 
-/* ---------- MAIN CONTENT / GRID ---------- */
-.main{padding:var(--space-xl) 0}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-lg)}
-.grid--2col{grid-template-columns:repeat(12,1fr)}
-.col--primary{grid-column:span 8}
-.col--side{grid-column:span 4}
-@media (max-width:880px){
-  .col--primary,.col--side{grid-column:1/-1}
+/* Optimized Stars Background */
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  /* GPU acceleration */
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
-/* content utilities */
-.article{max-width:var(--measure);margin:0 auto;padding:var(--space-lg) 0}
-.article .meta{color:var(--muted);font-size:.95rem;margin-bottom:var(--space-sm)}
-.kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.02);font-weight:700;color:var(--muted);font-size:.8rem}
-
-/* ---------- FORMS / INPUTS ---------- */
-.input, textarea, select{
-  width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.04);
-  background:transparent;color:var(--text);outline:none;font-family:var(--font-ui);
-  transition:border-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);
-}
-.input:focus, textarea:focus, select:focus{border-color:var(--accent-weak);box-shadow:0 6px 18px rgba(168,143,90,.06)}
-
-/* consistent form button spacing */
-.form-actions{display:flex;gap:12px;align-items:center}
-
-/* ---------- CODE BLOCKS / PRE ---------- */
-pre,code{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-  background:rgba(255,255,255,.02);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,.03);color:var(--muted);overflow:auto;
-  font-size:.92rem;
-}
-pre{line-height:1.5}
-
-/* ---------- VISUAL RESTRAINT: TONE DOWN COSMIC ---------- */
-/* remove heavy background noise; keep subtle texture controlled by variable */
-:root{ --noise-opacity: 0.02 }
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.06'/%3E%3C/svg%3E");
-  opacity:var(--noise-opacity);mix-blend-mode:overlay;z-index:0;
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: twinkle 3s infinite;
+  /* GPU acceleration */
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* stars and orbs present but subdued and optional via class */
-.sky--decorative #stars, .orb{display:none}
-
-/* if you want low-key motion, enable this single class on body: .live */
-body.live .orb{
-  display:block;position:absolute;border-radius:50%;width:40px;height:40px;
-  border:1px solid rgba(168,143,90,.14);background:radial-gradient(circle at 30% 30%, rgba(168,143,90,.06), transparent);
-  transform:translate3d(0,0,0);opacity:.85;will-change:transform;
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.8; }
 }
 
-/* ---------- INTERACTION GRAMMAR (consistent, small vocabulary) ---------- */
-.interactive{
-  transition:transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), opacity var(--dur-fast) var(--ease);
-  will-change:transform,opacity;
+/* Optimized Floating Cosmic Particles */
+.cosmic-particle {
+  position: absolute;
+  background: var(--cosmic-gold);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 8s infinite ease-in-out;
+  /* GPU acceleration */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
-.interactive:focus{outline:2px solid rgba(168,143,90,.12);outline-offset:3px}
-kbd{background:rgba(255,255,255,.03);border-radius:6px;padding:4px 8px;font-weight:700}
 
-/* subtle hover micro-interaction */
-.hover-raise:hover{transform:translateY(-6px);box-shadow:var(--shadow-2)}
-.hover-ghost:hover{background:rgba(255,255,255,.02)}
-
-/* ---------- CONSISTENCY RULES (force uniform spacing and widths) ---------- */
-.site-footer{padding:var(--space-lg) 0;border-top:1px solid rgba(255,255,255,.03);color:var(--muted)}
-.article img{max-width:100%;height:auto;border-radius:8px;display:block;margin:var(--space-md) 0}
-ul,ol{margin:0 0 var(--space-md) 1.25rem;color:var(--muted)}
-
-/* ---------- LIGHT MODE (inverse tokens only) ---------- */
-@media (prefers-color-scheme: light){
-  :root{
-    --bg:#fbfbfb;--surface:#ffffff;--muted:#4b5563;--text:#111318;--accent:#9a7f4f;--accent-weak:rgba(154,127,79,.08);
-    --shadow-1:0 6px 18px rgba(16,24,32,.06);--shadow-2:0 18px 40px rgba(16,24,32,.08);
-    --noise-opacity: 0.01;
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg) translateZ(0); 
   }
-  body{background:linear-gradient(180deg,var(--bg),#f6f6f6);color:var(--text)}
-  .card{background:linear-gradient(180deg, rgba(11,12,13,0.01), rgba(255,255,255,0.6));border:1px solid rgba(16,24,32,.04)}
-  a:hover{color:#7b6a3b}
-  pre,code{background:rgba(16,24,32,.03);color:var(--muted)}
+  50% { 
+    transform: translateY(-20px) rotate(180deg) translateZ(0); 
+  }
 }
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:880px){
-  :root{--space-lg:20px}
-  h1{font-size:1.8rem}
-  .container{padding:0 var(--space-md)}
-  .grid{gap:var(--space-md)}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
 }
 
-/* ---------- MIGRATION / BACKWARDS COMPAT (selectors mapping) ----------
-   Ensure old selectors map to the new system to avoid page-specific regressions.
-   These are minimal adaptors to keep existing HTML working across pages.
-   Remove when templates updated.
---------------------------------------------------------------------*/
-header.site-header, .header{display:block}
-.intro{max-width:820px;margin:0 auto;padding:var(--space-lg);background:var(--glass);border-radius:10px;border:1px solid rgba(255,255,255,.03)}
-.nav-card, .content-card{ /* map old names to new card API */ }
-.nav-card{padding:var(--space-md);border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.04)}
-.content-card{max-width:920px;margin:0 auto}
-.support-element{position:fixed;right:16px;bottom:16px;padding:10px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.03)}
-.nav-link{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(168,143,90,.12);background:transparent;color:var(--accent);font-weight:700}
+/* Optimized Header */
+header {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  margin-bottom: 3rem;
+}
 
-/* ---------- ACCESSIBILITY / PERFORMANCE ---------- */
-img{max-width:100%;height:auto;display:block}
-[a],button{touch-action:manipulation}
-@media (prefers-reduced-motion:reduce){
-  *{transition:none!important;animation:none!important}
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+  animation: stellarGlow 4s infinite ease-in-out;
+  /* GPU acceleration */
+  will-change: text-shadow, opacity;
+  transform: translateZ(0);
+}
+
+@keyframes stellarGlow {
+  0%, 100% { 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    opacity: 0.95;
+  }
+  50% { 
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+    opacity: 1;
+  }
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cosmic-gold), transparent);
+  animation: shimmer 3s infinite;
+  will-change: opacity;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.author {
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-top: 1.5rem;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+/* Optimized Introduction */
+.intro {
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+  position: relative;
+  padding: 3rem;
+  font-size: 1.4rem;
+  line-height: 1.9;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  /* GPU acceleration */
+  will-change: transform, background;
+  transform: translateZ(0);
+}
+
+.intro::before, .intro::after {
+  content: '"';
+  position: absolute;
+  font-size: 6rem;
+  color: var(--cosmic-gold);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+  will-change: opacity;
+}
+
+.intro::before {
+  top: -10px;
+  left: 20px;
+}
+
+.intro::after {
+  bottom: -40px;
+  right: 20px;
+}
+
+/* Optimized Navigation Cards */
+.nav-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+  margin: 5rem 0;
+}
+
+.nav-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  /* GPU acceleration */
+  will-change: transform, box-shadow, border-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.nav-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  transition: left 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: left;
+}
+
+.nav-card:hover::before {
+  left: 100%;
+}
+
+.nav-card:hover {
+  transform: translateY(-15px) translateZ(0);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  border-color: var(--cosmic-gold);
+}
+
+.nav-section h2 {
+  font-family: 'EB Garamond', serif;
+  font-weight: 500;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--cosmic-light);
+  position: relative;
+}
+
+.nav-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 1px;
+  background: var(--cosmic-gold);
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.nav-section p {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--cosmic-light);
+  text-decoration: none;
+  border: 2px solid var(--cosmic-gold);
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  /* GPU acceleration */
+  will-change: transform, background, padding;
+  transform: translateZ(0);
+}
+
+.nav-link::before {
+  content: '→';
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%) translateZ(0);
+  font-size: 1.2rem;
+  color: var(--cosmic-gold);
+  transition: var(--transition);
+  animation: arrowPulse 2s infinite;
+  will-change: left, opacity;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.nav-link:hover::before {
+  left: 15px;
+  animation: none;
+}
+
+.nav-link:hover {
+  background: var(--cosmic-gold);
+  color: var(--cosmic-dark);
+  transform: translateY(-3px) translateZ(0);
+  padding-left: 3.5rem;
+}
+
+/* Optimized Cosmic Orbs */
+.cosmic-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(192, 165, 123, 0.1), transparent);
+  border: 1px solid rgba(192, 165, 123, 0.2);
+  animation: orbit 20s infinite linear;
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(100px) rotate(0deg) translateZ(0); }
+  100% { transform: rotate(360deg) translateX(100px) rotate(-360deg) translateZ(0); }
+}
+
+.orb-1 {
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  animation-duration: 25s;
+}
+
+.orb-2 {
+  bottom: 20%;
+  right: 10%;
+  width: 60px;
+  height: 60px;
+  animation-duration: 30s;
+  animation-direction: reverse;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-top: 5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Optimized Interactive Effects */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--cosmic-gold), transparent);
+  transform: scale(0) translateZ(0);
+  animation: ripple-animation 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  pointer-events: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4) translateZ(0);
+    opacity: 0;
+  }
+}
+
+/* Optimized Scroll Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: opacity, transform;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* Subpage Styles - Optimized */
+.page-header {
+  text-align: center;
+  padding: 4rem 0 3rem;
+  margin-bottom: 3rem;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  animation: stellarGlow 4s infinite ease-in-out;
+  will-change: text-shadow, opacity;
+  transform: translateZ(0);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+.nav-home {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px;
+  padding: 10px 20px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  will-change: transform, background;
+  transform: translateZ(0);
+}
+
+.nav-home:hover {
+  background: rgba(192, 165, 123, 0.1);
+  transform: translateY(-2px) translateZ(0);
+}
+
+.nav-home a {
+  color: var(--cosmic-light);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.content-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  padding: 2.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.content-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  transition: left 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: left;
+}
+
+.content-card:hover::before {
+  left: 100%;
+}
+
+.content-card:hover {
+  transform: translateY(-8px) translateZ(0);
+  border-color: var(--cosmic-gold);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.content-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--cosmic-gold);
+  transition: var(--transition);
+}
+
+.content-card p {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.content-card small {
+  color: rgba(255,255,255,0.5);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+}
+
+.content-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Performance boosts */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+} /* ← FIXED: Added missing closing brace */
+
+/* Cosmic Support Element */
+.support-element {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  padding: 15px 8px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, background;
+  transform: translateZ(0);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.support-element:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+
+.support-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid rgba(192, 165, 123, 0.3);
+  border-radius: 15px;
+  color: var(--cosmic-light);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  will-change: transform, background, border-color;
+  transform: translateZ(0);
+}
+
+.support-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(192, 165, 123, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.support-button:hover::before {
+  left: 100%;
+}
+
+.support-button:hover {
+  background: rgba(192, 165, 123, 0.15);
+  border-color: var(--cosmic-gold);
+  transform: translateY(-2px) translateZ(0);
+  color: var(--cosmic-gold);
+}
+
+.support-button .icon {
+  margin-right: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.support-button:hover .icon {
+  transform: scale(1.1);
+}
+
+/* Heart animation for support button */
+.support-button.support:hover .icon {
+  animation: heartBeat 0.6s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1.05); }
+  75% { transform: scale(1.15); }
+}
+
+/* Mail animation for contact button */
+.support-button.contact:hover .icon {
+  animation: mailBounce 0.6s ease;
+}
+
+@keyframes mailBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Cosmic glow effect */
+.support-element::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(192, 165, 123, 0.1), 
+    transparent, 
+    rgba(192, 165, 123, 0.05), 
+    transparent
+  );
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.support-element:hover::after {
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .intro {
+    font-size: 1.2rem;
+    padding: 2rem;
+  }
+  
+  .nav-card {
+    padding: 2rem;
+  }
+  
+  .nav-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .cosmic-orb {
+    display: none;
+  }
+  
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .support-element {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 6px;
+  }
+  
+  .support-button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-width: 100px;
+  }
+  
+  .support-button .icon {
+    margin-right: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== Light-mode overrides (add this at the end of css/style.css) ===== */
+  /* swap core variables for a light theme */
+  :root {
+    --cosmic-dark: #f7f7f7;
+    --cosmic-medium: #ffffff;
+    --cosmic-light: #0b0b0b; /* primary text color in light mode */
+    --cosmic-accent: #8a6d3b;
+    --cosmic-gold: #c0a57b;
+  }
+
+  body {
+    background: radial-gradient(circle at center, var(--cosmic-dark), var(--cosmic-medium));
+    color: var(--cosmic-light);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Primary readable text */
+  .poem-content,
+  .essay-content,
+  .content-card p,
+  .content-meta h1,
+  .content-meta small,
+  .content-card small,
+  .content-body,
+  .support-title,
+  .nav-home a,
+  .content-card a {
+    color: rgba(11,11,11,0.87) !important;
+  }
+
+  /* Secondary / muted text */
+  .content-card small,
+  .content-meta small,
+  .poem-content em,
+  .essay-content em {
+    color: rgba(11,11,11,0.58) !important;
+  }
+
+  /* Cards, nav and support panels */
+  .content-card,
+  .support-element,
+  .nav-home,
+  .support-panel,
+  .cosmic-buttons,
+  .cosmic-btn {
+    background: rgba(10,10,10,0.03) !important;
+    border: 1px solid rgba(11,11,11,0.06) !important;
+    box-shadow: 0 8px 24px rgba(11,11,11,0.04);
+  }
+
+  /* Glow / accent tweaks to keep the “cosmic” look but readable */
+  .support-element::after {
+    background: linear-gradient(45deg,
+      transparent,
+      rgba(192,165,123,0.06),
+      transparent,
+      rgba(192,165,123,0.03),
+      transparent
+    );
+  }
+
+  /* Navigation hover / subtle interactions */
+  .nav-home:hover {
+    background: rgba(11,11,11,0.03);
+    transform: translateY(-2px) translateZ(0);
+  }
+
+  .nav-home a {
+    color: var(--cosmic-light);
+  }
+
+  /* Ensure elements that were explicitly using white RGBA are readable in light mode */
+  /* Target the most common classes used throughout the site */
+  .poem-break,
+  .content-meta small,
+  .support-title::after {
+    color: var(--cosmic-gold);
+    opacity: 0.85;
+  }
+
+  /* Buttons and accent text */
+  .cosmic-btn,
+  .support-button {
+    color: var(--cosmic-light);
+  }
+
+  /* Fine-tune stars / background elements if present */
+  #stars,
+  #stars canvas {
+    opacity: 0.6;
+    filter: none;
+  }
+
+  /* A safety net for any leftover rules that used hard-coded white */
+  /* (use cautiously — it only affects elements that still render with white-ish text) */
+  .content-card [style*="rgba(255,255,255"],
+  .content-card *[style*="rgba(255,255,255"] {
+    color: initial !important;
+  }
+}
+
+/* =========================================================
+   LIGHT-MODE OVERRIDES — tuned for coherence and readability
+   ========================================================= */
+@media (prefers-color-scheme: light) {
+
+  :root {
+    --cosmic-dark: #f9f9f9;
+    --cosmic-medium: #ffffff;
+    --cosmic-light: #141414;
+    --cosmic-accent: #8a6d3b;
+    --cosmic-gold: #a57b45;
+    --shadow-soft: 0 4px 10px rgba(0,0,0,0.05);
+    --shadow-strong: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  body {
+    background: linear-gradient(to bottom, var(--cosmic-medium), var(--cosmic-dark));
+    color: var(--cosmic-light);
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Core readable text */
+  .poem-content,
+  .essay-content,
+  .content-card p,
+  .content-body,
+  .content-meta h1,
+  .support-title,
+  .nav-home a,
+  .content-card a {
+    color: rgba(0,0,0,0.87) !important;
+  }
+
+  /* Secondary / muted text */
+  .content-meta small,
+  .content-card small,
+  .poem-content em,
+  .essay-content em {
+    color: rgba(0,0,0,0.55) !important;
+  }
+
+  /* Cards, navigation, and support panels */
+  .content-card,
+  .support-element,
+  .support-panel,
+  .nav-home,
+  .cosmic-buttons,
+  .cosmic-btn {
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.2s ease;
+  }
+
+  .content-card:hover,
+  .cosmic-btn:hover,
+  .nav-home:hover {
+    box-shadow: var(--shadow-strong);
+    transform: translateY(-2px) translateZ(0);
+  }
+
+  /* Subtle cosmic glow retained but softened */
+  .support-element::after {
+    background: linear-gradient(45deg,
+      transparent,
+      rgba(165,123,69,0.06),
+      transparent,
+      rgba(165,123,69,0.03),
+      transparent);
+    opacity: 0.25;
+  }
+
+  /* Accent elements and separators */
+  .poem-break,
+  .support-title::after {
+    color: var(--cosmic-gold);
+    opacity: 0.85;
+  }
+
+  /* Buttons and active links */
+  .cosmic-btn,
+  .support-button {
+    color: var(--cosmic-light);
+    background: rgba(0,0,0,0.03);
+  }
+
+  .cosmic-btn:hover,
+  .support-button:hover {
+    background: rgba(0,0,0,0.05);
+  }
+
+  /* Decorative background elements */
+  #stars,
+  #stars canvas {
+    opacity: 0.6;
+    filter: none;
+  }
+
+  /* Safety catch for leftover hard-coded white RGBA text */
+  [style*="rgba(255,255,255"] {
+    color: rgba(0,0,0,0.87) !important;
+  }
 }
