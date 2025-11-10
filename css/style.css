@@ -822,104 +822,107 @@ footer {
   }
 }
 
-/* ===== Light-mode overrides (add this at the end of css/style.css) ===== */
+/* =========================================================
+   LIGHT-MODE OVERRIDES — tuned for coherence and readability
+   ========================================================= */
 @media (prefers-color-scheme: light) {
-  /* swap core variables for a light theme */
+
   :root {
-    --cosmic-dark: #f7f7f7;
+    --cosmic-dark: #f9f9f9;
     --cosmic-medium: #ffffff;
-    --cosmic-light: #0b0b0b; /* primary text color in light mode */
+    --cosmic-light: #141414;
     --cosmic-accent: #8a6d3b;
-    --cosmic-gold: #c0a57b;
+    --cosmic-gold: #a57b45;
+    --shadow-soft: 0 4px 10px rgba(0,0,0,0.05);
+    --shadow-strong: 0 8px 24px rgba(0,0,0,0.08);
   }
 
   body {
-    background: radial-gradient(circle at center, var(--cosmic-dark), var(--cosmic-medium));
+    background: linear-gradient(to bottom, var(--cosmic-medium), var(--cosmic-dark));
     color: var(--cosmic-light);
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Primary readable text */
+  /* Core readable text */
   .poem-content,
   .essay-content,
   .content-card p,
-  .content-meta h1,
-  .content-meta small,
-  .content-card small,
   .content-body,
+  .content-meta h1,
   .support-title,
   .nav-home a,
   .content-card a {
-    color: rgba(11,11,11,0.87) !important;
+    color: rgba(0,0,0,0.87) !important;
   }
 
   /* Secondary / muted text */
-  .content-card small,
   .content-meta small,
+  .content-card small,
   .poem-content em,
   .essay-content em {
-    color: rgba(11,11,11,0.58) !important;
+    color: rgba(0,0,0,0.55) !important;
   }
 
-  /* Cards, nav and support panels */
+  /* Cards, navigation, and support panels */
   .content-card,
   .support-element,
-  .nav-home,
   .support-panel,
+  .nav-home,
   .cosmic-buttons,
   .cosmic-btn {
-    background: rgba(10,10,10,0.03) !important;
-    border: 1px solid rgba(11,11,11,0.06) !important;
-    box-shadow: 0 8px 24px rgba(11,11,11,0.04);
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.2s ease;
   }
 
-  /* Glow / accent tweaks to keep the “cosmic” look but readable */
-  .support-element::after {
-    background: linear-gradient(45deg,
-      transparent,
-      rgba(192,165,123,0.06),
-      transparent,
-      rgba(192,165,123,0.03),
-      transparent
-    );
-  }
-
-  /* Navigation hover / subtle interactions */
+  .content-card:hover,
+  .cosmic-btn:hover,
   .nav-home:hover {
-    background: rgba(11,11,11,0.03);
+    box-shadow: var(--shadow-strong);
     transform: translateY(-2px) translateZ(0);
   }
 
-  .nav-home a {
-    color: var(--cosmic-light);
+  /* Subtle cosmic glow retained but softened */
+  .support-element::after {
+    background: linear-gradient(45deg,
+      transparent,
+      rgba(165,123,69,0.06),
+      transparent,
+      rgba(165,123,69,0.03),
+      transparent);
+    opacity: 0.25;
   }
 
-  /* Ensure elements that were explicitly using white RGBA are readable in light mode */
-  /* Target the most common classes used throughout the site */
+  /* Accent elements and separators */
   .poem-break,
-  .content-meta small,
   .support-title::after {
     color: var(--cosmic-gold);
     opacity: 0.85;
   }
 
-  /* Buttons and accent text */
+  /* Buttons and active links */
   .cosmic-btn,
   .support-button {
     color: var(--cosmic-light);
+    background: rgba(0,0,0,0.03);
   }
 
-  /* Fine-tune stars / background elements if present */
+  .cosmic-btn:hover,
+  .support-button:hover {
+    background: rgba(0,0,0,0.05);
+  }
+
+  /* Decorative background elements */
   #stars,
   #stars canvas {
     opacity: 0.6;
     filter: none;
   }
 
-  /* A safety net for any leftover rules that used hard-coded white */
-  /* (use cautiously — it only affects elements that still render with white-ish text) */
-  .content-card [style*="rgba(255,255,255"],
-  .content-card *[style*="rgba(255,255,255"] {
-    color: initial !important;
+  /* Safety catch for leftover hard-coded white RGBA text */
+  [style*="rgba(255,255,255"] {
+    color: rgba(0,0,0,0.87) !important;
   }
 }
